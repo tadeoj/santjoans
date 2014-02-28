@@ -1,4 +1,4 @@
-# SNATJOANS
+# SANTJOANS
 
 ## Proyecto
 En este repositorio encontrareis el código fuente del proyecto http://www.santjoans.es 
