@@ -1,0 +1,3 @@
+Este software se publica bajo la siguiente licencia:
+
+http://www.gnu.org/licenses/gpl.html

@@ -1,0 +1,47 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	
+	<ui:style>
+		.scrollpanel {
+		    width:650px;
+		    height:400px; 
+		}
+		.panel {
+		    width:580px; 
+		    padding: 20px; 
+		}
+	
+	</ui:style>
+	
+	<g:ScrollPanel styleName='{style.scrollpanel}'>
+	<g:HTMLPanel styleName='{style.panel}'>
+	<h1 align="center">Como utilizar esta pantalla</h1>
+	En esta pantalla encontramos diversos elementos que nos permitirán visualizar las piezas, desplazarnos a través de ellas y 
+	además variar el nivel de detalle con el que las visualizaremos.
+	<ul>
+	<li><i>Ventana de visión: </i>Está en la zona superior y es mediante la cual vemos las piezas</li>
+	<li><i>Vista de navegación: </i>Se encuentra centrada horizontalmente en la parte inferior y 
+	presenta una miniatura de todas las piezas junto a un cuadro rojo sobre éstas que nos indica la zona 
+	que estamos observando en la ventana de visión.</li>
+	<li><i>Botonera: </i>Botones con los que gestionar el zoom y el movimiento de la ventana de visión.</li>
+	</ul>
+	Inicialmente la ventana de visión muestra todas las piezas, pudiéndose ampliar los detalles mediante los botones 
+	de control de zoom. En el momento que activamos el zoom tendremos en la ventana de visión una vista parcial del conjunto y podremos utilizar 
+	varios mecanismos para desplazar la ventana de visión:
+	<ul>
+	<li>Mediante los botones de dirección, indicando la dirección de la flecha hacia donde se moverá la ventana de visión.</li>
+	<li>Podemos pulsar en el interior del cuadro rojo de la vista de navegación y arrastrarlo hacia la zona que deseemos. 
+	En el momento de finalizar la pulsación, la ventana de visión se actualizará según la nueva posición del cuadro rojo. 
+	Si activamos la opción <i>sincronizar durante el movimiento</i>, la ventana de visión se actualizará al mismo tiempo que movemos el cuadro rojo.</li>
+	<li>También podemos pulsar sobre las propias piezas de la ventana de vision y arrastrar las piezas en la dirección que deseemos.</li>
+	</ul>
+	<p>Si pulsamos sobre el botón que se encuentra en el centro de los botones de las flechas de dirección se ajustará el zoom 
+	al modo inicial en el que se encontraba cuando accedimos a esta pantalla, pudiendo ver en la ventana de visión todas las piezas.</p>
+	El mayor niver de detalle de una pieza lo obtendremos haciendo un doble click sobre cualquiera de ellas, entonces ésta se presentará 
+	en gran formato y correctamente orientada en un primer plano. 
+	Pulsado en cualquier lugar fuera de la pieza, ésta desaparecerá.
+	</g:HTMLPanel>
+	</g:ScrollPanel>
+	
+</ui:UiBinder> 

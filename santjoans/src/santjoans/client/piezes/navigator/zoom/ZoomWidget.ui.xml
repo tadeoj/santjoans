@@ -1,0 +1,24 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:b="urn:import:santjoans.client.imagebutton">
+	
+	<ui:style>
+		.vertical-panel-zoom {
+			width:50px;
+			height:120px;
+			margin-left: 40px;
+			margin-right: 40px;
+		}
+	</ui:style>
+	
+	<g:VerticalPanel styleName='{style.vertical-panel-zoom}' >
+		<g:cell verticalAlignment='ALIGN_TOP'>
+			<b:ImageButton ui:field="zoomIn" />
+		</g:cell>
+		<g:cell verticalAlignment='ALIGN_BOTTOM'>
+			<b:ImageButton ui:field="zoomOut" />
+		</g:cell>
+	</g:VerticalPanel>
+	
+</ui:UiBinder> 

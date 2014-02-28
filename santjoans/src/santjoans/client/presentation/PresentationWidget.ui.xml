@@ -1,0 +1,174 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	
+	<!-- Mediante los recursos no funciona todavia el CSS -->
+	<ui:with field='res' type='santjoans.client.resources.ISantjoansResources'/>
+	
+	<ui:style>
+	
+		.presentation {
+			/*background-color: #FFDAB9;*/
+			background-color: white;
+		    width:700px; 
+		    margin:1em auto; 
+		    border:1px solid #333333; 
+		    text-align:justify; /*aqui alineamos todo de nuevo a la izquierda, pero dentro del contenedor*/
+		    padding: 10px 20px 20px 20px; 
+		}
+		h1 {
+			margin:auto auto 10px auto;
+		}
+		.header {
+			margin:10px;
+		}
+		.palacio {
+			width:150px;
+			float:left;
+			clear:both;
+			padding:4px 4px 4px 4px;
+			margin: 0px 10px 10px 0px;
+			border:1px solid gray;
+			cursor:pointer;
+		}
+		.piezas {
+			height:150px;
+			float:left;
+			clear:both;
+			padding:4px 4px 4px 4px;
+			margin: 0px 10px 10px 0px;
+			border:1px solid gray;
+			cursor:pointer;
+		}
+		.museo {
+			width:150px;
+			float:right;
+			clear:both;
+			padding:4px 4px 4px 4px;
+			border:1px solid gray;
+			margin: 0px 0px 10px 10px;
+			cursor:pointer;
+		}
+		.escudos {
+			cursor:pointer;
+		}
+		.reading {
+			text-align:center;
+			padding:10px;
+		}
+		.accesscontainer {
+			width:100%;
+			height:35px;
+		}
+		.accessLabel {
+			padding:2px;
+			color: red;
+		}
+		.accessButton {
+			padding:2px;
+			font-size: large;
+			color: red;
+		}
+		.infoLinks:LINK {
+			font-size: medium;
+			color: red;
+		}
+		.infoLinks:VISITED {
+			font-size: medium;
+			color: red;
+		}
+		.infoLinks:HOVER {
+			font-size: medium;
+			color: red;
+		}
+		.infoLinks:ACTIVE {
+			font-size: medium;
+			color: red;
+		}
+		
+	</ui:style>
+	
+	<g:ScrollPanel>
+		<g:HTMLPanel styleName='{style.presentation}'>
+			<div styleName='{style.header}'>
+					<h1>Cerámica Zoo-Mórfica del palacio de Santjoans</h1>
+			</div>
+				<g:HorizontalPanel styleName="{style.accesscontainer}">
+					<g:cell horizontalAlignment='ALIGN_CENTER' verticalAlignment='ALIGN_MIDDLE'>
+						<g:Label ui:field="estadoCarga" visible="true" styleName='{style.accessLabel}'>
+						Cargando piezas...
+						</g:Label>
+					</g:cell>
+					<g:cell horizontalAlignment='ALIGN_CENTER' verticalAlignment='ALIGN_MIDDLE'>
+						<g:Button ui:field="verMural" visible="false" styleName='{style.accessButton}'>
+						Ver pavimento
+						</g:Button>
+					</g:cell>
+				</g:HorizontalPanel>
+				<hr style="height:1"/>
+				<g:Image styleName="{style.palacio}" ui:field="palacio"/>
+				<p>El palacio de Santjoans está situado en el centro de <g:Anchor href="http://www.cinctorres.es" target="_blank">Cinctorres</g:Anchor>, 
+				en la calle Sol de la Vila y esquina con la Plaza Vieja donde destaca como edificio civil
+				nobiliario, debiendo su nombre a la familia noble SantJoan que fue la más importante de 
+				todas a las que perteneció el edificio.</p>
+				<p>Esta casa tiene su origen en el s.XV, aunque su estructura actual es del s.XVII. 
+				Se trata de un palacio de estilo aragonés que se encuentra muy bien conservado externamente. 
+				Consta de dos alturas y su fachada es de piedra, despuntando un alero <b>doble</b> de madera. 
+				También tiene una torre cuadrada con cubierta a cuatro aguas que envuelve exteriormente la escalera.</p>
+				<P>Después de varios siglos de propiedad privada, a finales del s.XX pasó a ser propiedad 
+				de la Excelentísima Diputación de Castellón, que actualmente lo ha cedido al Ayuntamiento con fines de museo y actividades culturales.</P>
+				<hr style="height:1"/>
+				
+				<p style="clear:both;" ></p>
+				<g:Image styleName='{style.museo}' ui:field="museo"/>
+				<p>La <b>planta inferior</b> es utilizada para albergar la colección museográfica permanente 
+				compuesta por piezas paleontológicas procedentes del yacimiento paleontológico 
+				<g:Anchor href="http://www.dinomania.es" target="_blank">Ana</g:Anchor>.</p>
+				<p>Este yacimiento fue descubierto en el año 1998 por el geólogo cinctorrano Ramón Ortí,
+				pero no fue hasta el año 2002 cuando se actúa sobre él. 
+				Mas de 500 fósiles han sido recuperados en las diversas campañas de excavaciones realizadas hasta la fecha.
+				Su historia, sus hallazgos y sus particularidades hacen de ANA un yacimiento singular, 
+				que está dando muchos frutos científicos plasmados en los trabajos publicados hasta la fecha.</p>			
+				<hr style="height:1"/>
+				
+				<p style="clear:both;" ></p>
+				<g:Image styleName='{style.piezas}' ui:field="piezas"/>
+				<p>A la <b>planta superior</b> se accede mediante una escalera con madera ricamente trabajada, 
+				la cual está rodeada por los 
+				<g:Anchor styleName='{style.escudos}' ui:field="escudos">escudos heráldicos en policromía</g:Anchor> de 
+				los diversos habitantes que allí han vivido.</p>
+				<p>En el techo de la escalera encontramos  
+				<g:Anchor styleName='{style.escudos}' ui:field="escudotecho">otro escudo</g:Anchor> de 
+				forma ovoidal con las diferentes armas de todas las ramas de la familia
+				en diferentes épocas y que es muy interesante.</p>
+				<p>En la antesala del salón noble se aprecia un retablo de cerámica en el pavimento, del que faltan varias piezas, que bien puede 
+				ser la imagen de <g:Anchor href="http://es.wikipedia.org/wiki/Luis_Bertr%C3%A1n" target="_blank">San Luis Beltrán</g:Anchor>.
+				En un lado del retablo se ve la figura de un <g:Anchor styleName='{style.escudos}' ui:field="indio">indio en oración</g:Anchor>.</p>
+				<p>El salón principal está cubierto por un pavimento decorado con figuras zoo-mórficas. En el centro, 
+				como un retablo, el escudo heráldico con las armas de Sanjoan y Sousa, éste último de origen portugués.
+				Francisco Javier Sanjoan y Penarroja, de quien lleva el nombre el escudo, era natural de Cinctorres y 
+				muy recordado por su lucha contra los invasores franceses.</p>
+				<hr style="height:1"/>
+							
+				<p style="clear:both;" ></p>
+				<p>El <b>pavimento</b> está fabricado en las reales fábricas de Valencia en la segunda mitad del s.XVIII. 
+				Son azulejos trabajados con la técnica milenaria 
+				llamada <g:Anchor href="http://es.wikipedia.org/wiki/May%C3%B3lica" target="_blank">Mayólica</g:Anchor>. 
+				Las figuras representadas son extraídas de las viñetas de diferentes 
+				<g:Anchor href="http://es.wikipedia.org/wiki/Auca" target="_blank">Aucas</g:Anchor> editadas por Agustín Laborda
+				en su taller de Valencia (Del Sol y Luna 1752, Animales terrestres 1760, Animales acuáticos 1780 y de Aves 1790). 
+				Todas ellas tiene la misma característica, reproducen la figura de un solo animal en el hábitat de la especie representada.</p>
+				<hr style="height:1"/>
+
+				<g:HorizontalPanel styleName="{style.accesscontainer}">
+					<g:cell horizontalAlignment='ALIGN_LEFT'>
+						<g:Anchor styleName='{style.infoLinks}' href="proyecto.html" target="_blank">Información del proyecto</g:Anchor>
+					</g:cell>
+					<g:cell horizontalAlignment='ALIGN_RIGHT'>
+						<g:Anchor styleName='{style.infoLinks}' href="http://jtpadilla.blogspot.com/search/label/santjoans" target="_blank">Noticias</g:Anchor>
+					</g:cell>
+				</g:HorizontalPanel>
+				
+		</g:HTMLPanel>
+	</g:ScrollPanel>
+</ui:UiBinder> 

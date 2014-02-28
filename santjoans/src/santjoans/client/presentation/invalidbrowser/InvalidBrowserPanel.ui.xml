@@ -1,0 +1,31 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	
+	<ui:style>
+		.panel {
+		    width:600px; 
+		    padding: 20px; 
+		}
+	
+	</ui:style>
+	
+	<g:HTMLPanel styleName='{style.panel}'>
+<h1 align="center">Problemas con el navegador</h1>
+Esta pagina no funciona correctamente con versiones antiguas de los navegadores.
+<p>Las capacidades graficas de esta pagina estan basadas en la estandar emergente HTML 5 las 
+cuales no estan soportadas correctamente todavia por este navegador.</p>
+<p>
+Para poder visualizar correctamente el pavimento del Palau Santjoans debera utilizar un navegador modermo.
+</p>
+<p>
+<ul>
+<li><g:Anchor href="http://windows.microsoft.com/es-ES/internet-explorer/products/ie/home" target="_blank">Internet Explorer</g:Anchor></li>
+<li><g:Anchor href="http://www.google.com/chrome" target="_blank">Google Chrome</g:Anchor></li>
+<li><g:Anchor href="http://www.mozilla-europe.org/es/firefox/" target="_blank">Mozilla Firefox</g:Anchor></li>
+<li><g:Anchor href="http://www.apple.com/es/safari/" target="_blank">Apple Safari</g:Anchor></li>
+</ul>
+</p>
+	</g:HTMLPanel>
+	
+</ui:UiBinder> 

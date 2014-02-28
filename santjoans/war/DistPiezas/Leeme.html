@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Detalles sobre el formato de distribución de las imágenes de las piezas zoomórficas del Palau Santjoans</title>
+</head>
+<body>
+
+<h2><a name="licencia">Licencia</a></h2>
+Hemos pensado que las imágenes que utiliza este proyecto pueden resultar útiles como ilustraciones
+para otros proyectos, lo cual a su vez podra ayudar a la promoción de este patrimonio. Debido a esto las hemos publicado bajo la siguiente licencia:
+<div align="center" style="border-width: 1px; border-style: solid; border-color: black; margin:12px 30px; padding:12px 30px;">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Licencia de Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/StillImage" property="dct:title" rel="dct:type">Imágenes de figuras zoomórficas del Palau Santjoans</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://www.santjoans.es/proyecto.html#contacto" property="cc:attributionName" rel="cc:attributionURL">Juan Padilla Julian</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Reconocimiento-NoComercial-CompartirIgual 3.0 Unported License</a>.<br />Permissions beyond the scope of this license may be available at <a xmlns:cc="http://creativecommons.org/ns#" href="http://www.santjoans.es/proyecto.html#contacto" rel="cc:morePermissions">http://www.santjoans.es/proyecto.html#contacto</a>.</div>
+<div align="center" >
+</div>
+
+<h2><a name="directorios">Directorios</a></h2>
+Las imágenes se transforman desde el formato RAW utilizado por la cámara a formato JPG (y en 
+algunos casos también a formato PNG).
+<P>
+Esta transformación se realiza en varias resoluciones que han sido calculadas para el óptimo 
+funcionamiento de la web <a href="http://www.santjoans.es" target="_blank">http://www.santjoans.es</a>, aunque los distintos tamaños cubrirán la 
+mayoría de las necesidades.
+<P>
+Cada una de las resoluciones tiene una correspondencia con un nombre de directorio:
+<table>
+<tr>
+<td><b>piezas/full</b></td>
+<td>1900x1900 pixeles</td>
+</tr>
+<tr>
+<td><b>piezas/550</b></td>
+<td>550x550 pixeles</td>
+</tr>
+<tr>
+<td><b>piezas/360</b></td>
+<td>360x360 pixeles</td>
+</tr>
+<tr>
+<td><b>piezas/60</b></td>
+<td>60x60 pixeles</td>
+</tr>
+</table>
+<P>
+En la entrada del blog <a href="http://jtpadilla.blogspot.com/2010/10/nueva-version-de-la-web-del-palau.html" target="_blank">Nueva versión de la Web Santjoans 1</a>
+se puede encontrar una breve explicación de como se determinaron estas resoluciones.
+
+<h2><a name="tipospiezas">Tipos de piezas</a></h2>
+Desde el punto de vista de las coordenadas existen dos tipos de piezas. Unas que son las que encontramos en el centro de 
+mosaico y que están colocadas de forma normal y otras que estan colocadas a cartabón y que rodean las piezas anteriores.
+<P>
+Cada uno de los tipos de piezas tiene su propio directorio (que está a su vez dentro del directorio que corresponde a cada resolucion).
+<table>
+<tr>
+<td><b>piezas/full/main</b></td>
+<td>1900x1900 píxeles colocadas a cartabón</td>
+</tr>
+<tr>
+<td><b>piezas/full/center</b></td>
+<td>1900x1900 píxeles colocadas normal</td>
+</tr>
+<tr>
+<td><b>piezas/550/main</b></td>
+<td>550x550 píxeles colocadas a cartabón</td>
+</tr>
+<tr>
+<td><b>piezas/550/center</b></td>
+<td>550x550 píxeles colocadas normal</td>
+</tr>
+<tr>
+<td><b>piezas/360/main</b></td>
+<td>360x360 píxeles colocadas a cartabón</td>
+</tr>
+<tr>
+<td><b>piezas/360/center</b></td>
+<td>360x360 píxeles colocadas normal</td>
+</tr>
+<tr>
+<td><b>piezas/60/main</b></td>
+<td>60x60 píxeles colocadas a cartabón</td>
+</tr>
+<tr>
+<td><b>piezas/60/center</b></td>
+<td>60x60 píxeles colocadas normal</td>
+</tr>
+</table>
+<h2><a name="formato">Formato de las piezas</a></h2>
+Prácticamente todas las piezas están en formato JPG ya que es muy importante minimizar el peso de éstas para 
+reducir el tiempo de carga desde el servidor hasta el navegador.
+<P>
+Sin embargo existen unos casos particulares 
+donde es necesario el uso de transparencias, y como ésta es una característica no soportada por el formato JPG 
+se ha utilizado el formato PNG. Algunas de las piezas que están colocadas a cartabón alrededor de 
+las piezas centrales (que están colocadas normalmente) están cortadas por su diagonal y solo es visible media pieza, motivo por el cual se ha utilizado la transparencia.
+<h2><a name="coordenadas">Coordenadas de las piezas</a></h2>
+Como ya se indica en la información del proyecto <a href="http://www.santjoans.es/proyecto.html#fidelidadrepresentacion" target="_blank">fidelidad de la representación</a>,
+se ha digitalizado fielmente el conjunto de piezas que realmente tiene valor y que son las piezas de la zona central y las piezas de figuras zoomórficas que rodean la zona central.
+<P>
+Segun el <a href="MapaPiezas.pdf" target="_blank">mapa que proporcionamos </a> en esta distribución, las piezas que se han digitalizado individualmente 
+son aquellas que se encuentran en el interior de la zona delimitada por la línea amarilla.
+<P>Las piezas que se encuentran en el exterior de la zona delimitada por dicha línea no han sido digitalizadas individualmente
+y se han utilizado algoritmos para completar el diseño de la aplicacion Web. Encontraremos unas piezas con los nombres 
+desde <b>flor0.jpg</b> hasta <b>flor9.jpg</b> las cuales se han insertado y girado de forma aleatoria para formar el relleno de esta zona. 
+Además también están las piezas desde <b>marmol1.jpg</b> a <b>marmol4.jpg</b> que se insertan y 
+giran de forma aleatoria para generar los cuatro rombos con textura de marmol que vemos en las cuatro esquinas.
+<P>
+Las piezas que si se han digitalizado individualmente tienen un nombre de archivo especial ya que hay información útil codificada en el propio nombre.
+Los nombres de estos archivos contienen tres campos los cuales estan separados entre si mediante el caracter '_' y teniendo cada uno de los campos 
+el siguiente valor:
+<ul>
+<li>El primer campo es un número que indica la coordenada X que ocupa la pieza dentro de su sistema de coordenadas.</li>
+<li>El segundo campo indica la coordenada Y que ocupa la pieza dentro de su sistema de coordenadas</li>
+<li>El tercer campo indica el número de grados que habrá que rotar la pieza (en la dirección de las agujas del reloj) para ver 
+la figura representada en su posicion correcta, que será cuando queramos ver cada pieza de forma individual y en detalle (digamos que con los pies hacia abajo y la cabeza hacia arriba).</li>
+</ul>
+<h3>Consideraciones específicas para las piezas instaladas normales o centrales (Center)</h3>
+<ul>
+<li>En el mapa proporcionado podremos encontrar en la zona central un sistema de coordenadas con el rango para X de 0-9 y el rango para Y de 0-6 
+que será utilizado por este tipo de piezas.</li>
+<li>Para formar el tapiz en la pantalla estas piezas serán colocadas en la pantalla sin ninguna rotación.</li>
+</ul>
+<h3>Consideraciones específicas para las piezas instaladas a cartabón (Main)</h3>
+<ul>
+<li>
+En el mapa proporcionado encontraremos un sistema de coordenadas con un rango para X de 0-54 y el rango para Y de 0-26 
+que será utilizado para este tipo de piezas</li>
+<li>En este sistema la coordenada de cada pieza es la que le corresponde al punto central de la misma (tenemos unas líneas punteadas que nos ayudarán).</li>
+<li>Para formar el tapiz en la pantalla, estas piezas serán colocadas con una rotacion de 45 grados en el sentido de las agujas del reloj, ya que tienen que estar instaladas a cartabón.</li>
+</ul>
+<P>
+</body>
+</html>

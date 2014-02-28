@@ -1,0 +1,16 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:d="urn:import:santjoans.client.canvas">
+	
+	<ui:style>
+		.s-canvas {
+			border:1px solid black;
+			margin: 10;
+		}
+	</ui:style>
+	
+	<d:GWTCanvasEventEnabled ui:field="gwtCanvas" styleName='{style.s-canvas}'>
+	</d:GWTCanvasEventEnabled>
+	
+</ui:UiBinder> 

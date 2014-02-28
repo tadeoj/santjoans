@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+
+<servlet>
+  <servlet-name>com_google_gwt_libideas_logging_server_RemoteLoggingServiceImpl</servlet-name>
+  <servlet-class>com.google.gwt.libideas.logging.server.RemoteLoggingServiceImpl</servlet-class>
+</servlet>
+<servlet-mapping>
+  <servlet-name>com_google_gwt_libideas_logging_server_RemoteLoggingServiceImpl</servlet-name>
+  <url-pattern>/santjoans/logging</url-pattern>
+</servlet-mapping>
+
+</web-app>
