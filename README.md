@@ -12,8 +12,8 @@ Las distintas entradas del blog con todos las noticias relacionadas con el proye
 Esta aplicación se termino de desarrollar con la versión 2.1.1 de GWT y por tanto utiliza las posibilidades que ofrecía dicha versión.
 
 Dependencias:
-  * En aquel momento no existía soporte para Canvas en el SDK por lo que se utilizaron librerías [http://code.google.com/p/google-web-toolkit-incubator/ externas] que han dado muy buen resultado (creo que era la incubadora de las que actualmente se integran en el SDK).
-  * Para la carga de imagenes asincrona utilice [http://code.google.com/p/gwt-image-loader/ gwt-image-loader].
+  * En aquel momento no existía soporte para Canvas en el SDK por lo que se utilizaron librerías [externas](http://code.google.com/p/google-web-toolkit-incubator/) que han dado muy buen resultado (creo que era la incubadora de las que actualmente se integran en el SDK).
+  * Para la carga de imagenes asincrona utilice [gwt-image-loader](http://code.google.com/p/gwt-image-loader/).
 He verificado que se puede compilar y funciona correctamente con la ultima versión (version 2.4 en el momento de la plublicación del codigo).
 
 Cuando inicie el desarrollo la decisión de utilizar HTML5 en lugar de Flash no fue facil ya que algunos navegaores todavia no soportaban el Canvas y parecía que me metía en un gran lió, si embargo parece que nuestro amigo Jobs tenia razon.
