@@ -1,17 +1,17 @@
 santjoans
 =========
 
-==Proyecto==
+# Proyecto
 En este repositorio encontrareis el código fuente del proyecto http://www.santjoans.es 
 
-==Información general==
+# Información general
 Si solo os interesan las imágenes para ilustrar cualquier tipo de obra podéis descargarlas directamente en este [http://www.santjoans.es/proyecto.html#imagenes enlace].
 
 Si tenéis curiosidad en los aspectos mas generales de porque se realizo este proyecto, como se ejecuto y otros datos generales, podéis seguir este [http://www.santjoans.es/proyecto.html enlace].
 
 Las distintas entradas del blog con todos las noticias relacionadas con el proyecto, las encontrareis siguiendo siguiente [http://jtpadilla.blogspot.com/search/label/santjoans enlace].
 
-==Información para desarrolladores==
+# Información para desarrolladores
 Esta aplicación se termino de desarrollar con la versión 2.1.1 de GWT y por tanto utiliza las posibilidades que ofrecía dicha versión.
 
 Dependencias:
