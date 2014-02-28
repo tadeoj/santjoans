@@ -25,12 +25,12 @@ Algunas de estas cosas son:
   * Adaptarlo para su correcto funcionamiento en tables de Android y IPad
   * Mejorar el aspecto general (claramente no se mucho de diseñar interfaces)
 
-== Ejecutandolo desde Eclipse
+## Ejecutandolo desde Eclipse
 Para ejecutar esta aplicación desde Eclipse hay que tener en cuenta un par de cosas (para usuarios con experiencia en GWT):
   * Hay que seleccionar el fichero Santjoans.html como punto de entrada de la lista que se nos ofrecera.
   * La ejecución en el modo Hosted resulta muy pesada y hay que reservarla para depuración. Primero compilar y despues en lugar de abrir la URL que nos proporciona (algo asi como http://127.0.0.1:8888/Santjoans.html?gwt.codesvr=127.0.0.1:9997) abrir (http://127.0.0.1:8888/Santjoans.html) que ejecutara la versión estática compilada.
 
-== Una cosa mas
+## Una cosa mas
 La verdad es que mientras trabajaba en este proyecto no pensé en que algún día lo publicaría en código abierto así que los comentarios que encontrareis están pensados para uso propio que para terceros (espero que no haya escondida por ahí dentro ninguna sorpresa).
 
 También confieso que es la primera aplicación que desarrollo que se ejecuta en un navegador y he afrontado este proyecto mas como un programador convencional que como un programador Web (creo que se nota en el codigo) lo cual ha sido posible gracias a este fantástico producto llamado [http://code.google.com/intl/en/webtoolkit/overview.html GWT]. 
