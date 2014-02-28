@@ -4,7 +4,7 @@
 En este repositorio encontrareis el código fuente del proyecto http://www.santjoans.es 
 
 ## Información general
-Si solo os interesan las imágenes para ilustrar cualquier tipo de obra podéis descargarlas directamente en este [http://www.santjoans.es/proyecto.html#imagenes enlace].
+Si solo os interesan las imágenes para ilustrar cualquier tipo de obra podéis descargarlas directamente en este [enlace] (http://www.santjoans.es/proyecto.html#imagenes).
 
 Si tenéis curiosidad en los aspectos mas generales de porque se realizo este proyecto, como se ejecuto y otros datos generales, podéis seguir este [http://www.santjoans.es/proyecto.html enlace].
 
