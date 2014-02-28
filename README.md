@@ -33,6 +33,6 @@ Para ejecutar esta aplicación desde Eclipse hay que tener en cuenta un par de c
 ## Una cosa mas
 La verdad es que mientras trabajaba en este proyecto no pensé en que algún día lo publicaría en código abierto así que los comentarios que encontrareis están pensados para uso propio que para terceros (espero que no haya escondida por ahí dentro ninguna sorpresa).
 
-También confieso que es la primera aplicación que desarrollo que se ejecuta en un navegador y he afrontado este proyecto mas como un programador convencional que como un programador Web (creo que se nota en el codigo) lo cual ha sido posible gracias a este fantástico producto llamado [GWT](http://code.google.com/intl/en/webtoolkit/overview.html). 
+También confieso que es la primera aplicación que desarrollo que se ejecuta en un navegador y he afrontado este proyecto mas como un programador convencional que como un programador Web (creo que se nota en el codigo) lo cual ha sido posible gracias a este fantástico producto llamado [GWT](http://www.gwtproject.org/). 
 
 Ahora ya no veo el navegador como un renderizador de paginas si no un potente runtime para ejecutar complejas aplicaciones.
