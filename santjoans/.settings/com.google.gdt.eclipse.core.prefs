@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 jarsExcludedFromWebInfLib=
-lastWarOutDir=/home/padilla/git/santjoans/santjoans/war
+lastWarOutDir=/home/tjulian/git/santjoans/santjoans/target/Santjoans
 launchConfigExternalUrlPrefix=
+warSrcDir=src/main/webapp
 warSrcDirIsOutput=false
