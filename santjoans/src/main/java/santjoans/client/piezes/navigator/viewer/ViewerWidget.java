@@ -3,6 +3,16 @@ package santjoans.client.piezes.navigator.viewer;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiFactory;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.widgetideas.graphics.client.Color;
+
 import santjoans.client.canvas.GWTCanvasEventEnabled;
 import santjoans.client.piezes.view.CenterView;
 import santjoans.client.piezes.view.IView;
@@ -12,16 +22,6 @@ import santjoans.client.transaction.sync.SyncPiezeLoader;
 import santjoans.client.util.IConfiguration;
 import santjoans.client.util.Util;
 import santjoans.client.util.ZoomModeEnum;
-
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiFactory;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.DeferredCommand;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.widgetideas.graphics.client.Color;
 
 abstract public class ViewerWidget extends Composite implements IConfiguration {
 
@@ -81,7 +81,7 @@ abstract public class ViewerWidget extends Composite implements IConfiguration {
 
 		@Override
 		public void moveDown() {
-			DeferredCommand.addCommand(new Command() {
+			Scheduler.get().scheduleDeferred(new Command() {
 				@Override
 				public void execute() {
 					TaskManager.execute(controllerViewer.moveDown());
@@ -91,7 +91,7 @@ abstract public class ViewerWidget extends Composite implements IConfiguration {
 
 		@Override
 		public void moveLeft() {
-			DeferredCommand.addCommand(new Command() {
+			Scheduler.get().scheduleDeferred(new Command() {
 				@Override
 				public void execute() {
 					TaskManager.execute(controllerViewer.moveLeft());
@@ -101,7 +101,7 @@ abstract public class ViewerWidget extends Composite implements IConfiguration {
 
 		@Override
 		public void moveRight() {
-			DeferredCommand.addCommand(new Command() {
+			Scheduler.get().scheduleDeferred(new Command() {
 				@Override
 				public void execute() {
 					TaskManager.execute(controllerViewer.moveRight());
@@ -111,7 +111,7 @@ abstract public class ViewerWidget extends Composite implements IConfiguration {
 
 		@Override
 		public void moveUp() {
-			DeferredCommand.addCommand(new Command() {
+			Scheduler.get().scheduleDeferred(new Command() {
 				@Override
 				public void execute() {
 					TaskManager.execute(controllerViewer.moveUp());
@@ -121,7 +121,7 @@ abstract public class ViewerWidget extends Composite implements IConfiguration {
 
 		@Override
 		public void setZoom(final ZoomModeEnum zoomModeEnum) {
-			DeferredCommand.addCommand(new Command() {
+			Scheduler.get().scheduleDeferred(new Command() {
 				@Override
 				public void execute() {
 					TaskManager.execute(controllerViewer.setZoom(zoomModeEnum));
@@ -131,7 +131,7 @@ abstract public class ViewerWidget extends Composite implements IConfiguration {
 		
 		@Override
 		public void setPosition(final int startX, final int startY) {
-			DeferredCommand.addCommand(new Command() {
+			Scheduler.get().scheduleDeferred(new Command() {
 				@Override
 				public void execute() {
 					TaskManager.execute(controllerViewer.setPosition(startX, startY));
