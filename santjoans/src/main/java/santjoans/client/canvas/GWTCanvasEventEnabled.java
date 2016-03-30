@@ -50,6 +50,9 @@ public class GWTCanvasEventEnabled extends GWTCanvas {
 				case Event.ONMOUSEDOWN:
 				case Event.ONMOUSEUP:
 				case Event.ONMOUSEMOVE:
+				case Event.ONTOUCHMOVE:
+				case Event.ONTOUCHSTART:
+				case Event.ONTOUCHEND:
 				case Event.ONMOUSEOUT:
 					NativeEvent nativeEvent = previewEvent.getNativeEvent();
 					int x = nativeEvent.getClientX() - getAbsoluteLeft() - 1;
@@ -63,6 +66,8 @@ public class GWTCanvasEventEnabled extends GWTCanvas {
 			} else {
 				switch (previewEvent.getTypeInt()) {
 				case Event.ONMOUSEMOVE:
+				case Event.ONTOUCHMOVE:
+				case Event.ONTOUCHSTART:
 				case Event.ONMOUSEOVER:
 					nativeListener.firedEvent(0, 0, Event.ONMOUSEOUT);
 				}

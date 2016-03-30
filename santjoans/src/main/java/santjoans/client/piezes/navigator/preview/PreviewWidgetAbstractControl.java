@@ -56,6 +56,7 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 		switch (status) {
 		case OFF:
 			switch (eventType) {
+			case Event.ONTOUCHMOVE:
 			case Event.ONMOUSEMOVE:
 				// Mientras no engancha la vista el movimiento el contexto de referencia es el del preview
 				if (isInViewWindow(previewWidgetContext, x, y)) {
@@ -69,6 +70,7 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 			break;
 		case PREPARED:
 			switch (eventType) {
+			case Event.ONTOUCHMOVE:
 			case Event.ONMOUSEMOVE:
 				// Mientras no engancha la vista el movimiento el contexto de referencia es el del preview
 				if (!isInViewWindow(previewWidgetContext, x, y)) {
@@ -77,11 +79,13 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 					status = Status.OFF;
 				}
 				break;
+			case Event.ONTOUCHCANCEL:
 			case Event.ONMOUSEOUT:
 				// El cursor ha salida de la zona de vision
 				DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", cursor);
 				status = Status.OFF;
 				break;
+			case Event.ONTOUCHSTART:
 			case Event.ONMOUSEDOWN:
 				// Mientras no engancha la vista el movimiento el contexto de referencia es el del preview
 				if (isInViewWindow(previewWidgetContext, x, y)) {
@@ -96,6 +100,7 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 			break;
 		case ON:
 			switch (eventType) {
+			case Event.ONTOUCHMOVE:
 			case Event.ONMOUSEMOVE:
 				// Esta moviendose con la visa enganchada hay que utilizarel contexto dinamico).
 				if (isInViewWindow(currentContext, x, y)) {
@@ -112,6 +117,7 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 					}
 				}
 				break;
+			case Event.ONTOUCHSTART:
 			case Event.ONMOUSEUP:
 				// Esta moviendose con la vista enganchada (hay que utilizar el contexto dinamico).
 				DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", "pointer");
@@ -119,6 +125,7 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 				updateCurrentContext(x, y, true);
 				moveFinish(currentContext);
 				break;
+			case Event.ONTOUCHEND:
 			case Event.ONMOUSEOUT:
 				// Se ha salido del control.
 				DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", cursor);
