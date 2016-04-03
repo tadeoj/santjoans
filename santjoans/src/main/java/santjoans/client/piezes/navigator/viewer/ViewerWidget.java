@@ -3,6 +3,7 @@ package santjoans.client.piezes.navigator.viewer;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -11,7 +12,6 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.widgetideas.graphics.client.Color;
 
 import santjoans.client.canvas.GWTCanvasEventEnabled;
 import santjoans.client.piezes.view.CenterView;
@@ -32,18 +32,23 @@ abstract public class ViewerWidget extends Composite implements IConfiguration {
 			UiBinder<Widget, ViewerWidget> {
 	}
 
-	@UiField
-	GWTCanvasEventEnabled gwtCanvas;
+	@UiField(provided = true)
+	Canvas gwtCanvas;
+	
+	protected GWTCanvasEventEnabled gwtCanvasEvent;
 	
 	protected ControllerViewer controllerViewer;
 	protected IControllerViewerCommands piezeViewerCommands;
 
 	public ViewerWidget() {
 		
+		gwtCanvasEvent = new GWTCanvasEventEnabled();
+		gwtCanvas = Canvas.wrap(gwtCanvasEvent);
+		
 		initWidget(uiBinder.createAndBindUi(this));
 		
 		// Se le asigna un color de background
-		gwtCanvas.setBackgroundColor(Color.GREY);
+//		gwtCanvas.setBackgroundColor(Color.GREY);
 		
 		// Se crean una lista con las vistas
 		// El orden es importante ya que interesa que las piezas centrales 

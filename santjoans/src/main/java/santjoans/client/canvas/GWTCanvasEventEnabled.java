@@ -1,13 +1,13 @@
 package santjoans.client.canvas;
 
+import com.google.gwt.dom.client.CanvasElement;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
-import com.google.gwt.widgetideas.graphics.client.GWTCanvas;
 
-public class GWTCanvasEventEnabled extends GWTCanvas {
+public class GWTCanvasEventEnabled extends CanvasElement {
 	
 	private int coordX;
 	private int coordY;
@@ -15,10 +15,14 @@ public class GWTCanvasEventEnabled extends GWTCanvas {
 	private HandlerRegistration handlerRegistration;
 	private ICanvasEventEnabledListener nativeListener;
 	
+	public GWTCanvasEventEnabled() {
+		super();
+	}
+	
 	public GWTCanvasEventEnabled(int coordX, int coordY) {
-		super(coordX, coordY);
-		this.coordX = coordX;
-		this.coordY = coordY;
+		super();
+		this.setWidth(coordX);
+		this.setHeight(coordY);
 	}
 
 	public void setEventListener(ICanvasEventEnabledListener listener) {
@@ -43,7 +47,7 @@ public class GWTCanvasEventEnabled extends GWTCanvas {
 			NativeEvent event = previewEvent.getNativeEvent();
 			Element element = event.getEventTarget().cast();
 			
-			if (element == getElement()) {
+			if (element == GWTCanvasEventEnabled.this) {
 				switch (previewEvent.getTypeInt()) {
 				case Event.ONDBLCLICK:
 				case Event.ONMOUSEOVER:

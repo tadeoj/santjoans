@@ -1,11 +1,10 @@
 package santjoans.client.piezes.navigator.preview;
 
+import com.google.gwt.user.client.Event;
+
 import santjoans.client.canvas.ICanvasEventEnabledListener;
 import santjoans.client.piezes.navigator.viewer.IControllerViewerCommands;
 import santjoans.client.util.ZoomModeEnum;
-
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Event;
 
 abstract public class PreviewWidgetAbstractControl extends PreviewWidget implements ICanvasEventEnabledListener {
 	
@@ -19,7 +18,6 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 	
 	protected IControllerViewerCommands piezeViewerCommands;
 	
-	private String cursor = null;
 	private Status status = Status.OFF;
 	
 	protected int initialPixelX;
@@ -34,7 +32,7 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 		super();
 		this.piezeViewerCommands = piezeViewerCommands;
 		this.syncViewer = syncViewer;
-		this.gwtCanvas.setEventListener(this);
+		this.gwtCanvasEvent.setEventListener(this);
 	}
 	
 	public boolean isSyncViewer() {
@@ -61,8 +59,8 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 				// Mientras no engancha la vista el movimiento el contexto de referencia es el del preview
 				if (isInViewWindow(previewWidgetContext, x, y)) {
 					// El cursor ha entrado en la zona de vision
-					cursor = DOM.getStyleAttribute(gwtCanvas.getElement(), "cursor");
-					DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", "pointer");
+					gwtCanvasEvent.getStyle().getProperty("cursor");
+					gwtCanvasEvent.getStyle().setProperty("cursor", "pointer");
 					status = Status.PREPARED;
 				}
 				break;
@@ -75,14 +73,14 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 				// Mientras no engancha la vista el movimiento el contexto de referencia es el del preview
 				if (!isInViewWindow(previewWidgetContext, x, y)) {
 					// El cursor ha salida de la zona de vision
-					DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", cursor);
+					gwtCanvasEvent.getStyle().setProperty("cursor", "cursor");
 					status = Status.OFF;
 				}
 				break;
 			case Event.ONTOUCHCANCEL:
 			case Event.ONMOUSEOUT:
 				// El cursor ha salida de la zona de vision
-				DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", cursor);
+				gwtCanvasEvent.getStyle().setProperty("cursor", "cursor");
 				status = Status.OFF;
 				break;
 			case Event.ONTOUCHSTART:
@@ -90,7 +88,7 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 				// Mientras no engancha la vista el movimiento el contexto de referencia es el del preview
 				if (isInViewWindow(previewWidgetContext, x, y)) {
 					// Mientras el cursor estaba en la zona de vision ha pulsado el raton (ha enganchado a visa)
-					DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", "move");
+					gwtCanvasEvent.getStyle().setProperty("cursor", "move");
 					status = Status.ON;
 					currentContext = initialContext = new PreviewWidgetContext(previewWidgetContext.getZoomMode(), previewWidgetContext.getStartX(), previewWidgetContext.getStartY());
 					initialPixelX = x;
@@ -120,7 +118,7 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 			case Event.ONTOUCHSTART:
 			case Event.ONMOUSEUP:
 				// Esta moviendose con la vista enganchada (hay que utilizar el contexto dinamico).
-				DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", "pointer");
+				gwtCanvasEvent.getStyle().setProperty("cursor", "pointer");
 				status = Status.PREPARED;
 				updateCurrentContext(x, y, true);
 				moveFinish(currentContext);
@@ -128,7 +126,7 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 			case Event.ONTOUCHEND:
 			case Event.ONMOUSEOUT:
 				// Se ha salido del control.
-				DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", cursor);
+				gwtCanvasEvent.getStyle().setProperty("cursor", "cursor");
 				status = Status.OFF;
 				//updateCurrentContext(x, y, true);
 				moveFinish(currentContext);

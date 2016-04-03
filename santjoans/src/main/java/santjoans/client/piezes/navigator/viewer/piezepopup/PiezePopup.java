@@ -1,21 +1,21 @@
 package santjoans.client.piezes.navigator.viewer.piezepopup;
 
-import santjoans.client.model.IPieze;
-import santjoans.client.util.IConfiguration;
-import santjoans.client.util.Util;
-
+import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.widgetideas.graphics.client.GWTCanvas;
-import com.google.gwt.widgetideas.graphics.client.ImageLoader;
+
+import santjoans.client.canvas.GWTCanvasEventEnabled;
+import santjoans.client.model.IPieze;
+import santjoans.client.util.IConfiguration;
+import santjoans.client.util.Util;
 
 public class PiezePopup extends PopupPanel implements IConfiguration {
 
@@ -26,12 +26,12 @@ public class PiezePopup extends PopupPanel implements IConfiguration {
 	
 	private static void setBusyCursor() {
 		Element element = RootPanel.getBodyElement();
-		DOM.setStyleAttribute(element, "cursor", "wait");
+		element.getStyle().setProperty("cursor", "wait");
 	}
 	
 	private static void setDefaultCursor() {
 		Element element = RootPanel.getBodyElement();
-		DOM.setStyleAttribute(element, "cursor", "default");
+		element.getStyle().setProperty("cursor", "default");
 	}
 
 	static public void displayPieze(final IPieze pieze) {
@@ -60,11 +60,16 @@ public class PiezePopup extends PopupPanel implements IConfiguration {
 
 
 	@UiField
-	GWTCanvas gwtCanvas;
+	Canvas gwtCanvas;
+	
+	private GWTCanvasEventEnabled gwtCanvasEvent;
 	
 	public PiezePopup(IPieze pieze, ImageElement piezeImageElment) {
-		// El EopupPanel desaparecera al picar fuera de el. 
+		// El PopupPanel desaparecera al picar fuera de el. 
 		super(true);
+		
+		gwtCanvasEvent = new GWTCanvasEventEnabled();
+		gwtCanvas = Canvas.wrap(gwtCanvasEvent);
 		
 		// Se construye el Widget con el UIBinder
 		Widget widget = uiBinder.createAndBindUi(this);
@@ -73,24 +78,25 @@ public class PiezePopup extends PopupPanel implements IConfiguration {
 		setWidget(widget);
 		
 		// Se pinta la imagen el en Canvas
-		gwtCanvas.saveContext();
+		gwtCanvas.getContext2d().save();
 		
 		// Trasladamos el origen
-		gwtCanvas.translate(Util.getCurrentScreenType().getPiezeViewerHeight() / 2, Util.getCurrentScreenType().getPiezeViewerWidth() / 2);
+		gwtCanvas.getContext2d().translate(Util.getCurrentScreenType().getPiezeViewerHeight() / 2, Util.getCurrentScreenType().getPiezeViewerWidth() / 2);
 		
 		// Definimos la rotacion
-		gwtCanvas.rotate(pieze.getDetailRadians());
+		gwtCanvas.getContext2d().rotate(pieze.getDetailRadians());
 		
 		// Dibujamos la pieza
-		gwtCanvas.drawImage( piezeImageElment, -(Util.getCurrentScreenType().getPiezeViewerSide() / 2), -(Util.getCurrentScreenType().getPiezeViewerSide()/ 2), Util.getCurrentScreenType().getPiezeViewerSide(), Util.getCurrentScreenType().getPiezeViewerSide());
+		gwtCanvas.getContext2d().drawImage( piezeImageElment, -(Util.getCurrentScreenType().getPiezeViewerSide() / 2), -(Util.getCurrentScreenType().getPiezeViewerSide()/ 2), Util.getCurrentScreenType().getPiezeViewerSide(), Util.getCurrentScreenType().getPiezeViewerSide());
 		
 		// Restauramos el contexto de dibujo
-		gwtCanvas.restoreContext();
+		gwtCanvas.getContext2d().restore();
 
 	}
 
-	@UiFactory GWTCanvas instantiateGWTCanvas() {
-		return new GWTCanvas(Util.getCurrentScreenType().getPiezeViewerHeight(), Util.getCurrentScreenType().getPiezeViewerWidth());
+	@UiFactory Canvas instantiateGWTCanvas() {
+		gwtCanvasEvent = new GWTCanvasEventEnabled(Util.getCurrentScreenType().getPiezeViewerHeight(), Util.getCurrentScreenType().getPiezeViewerWidth());
+		return Canvas.wrap(gwtCanvasEvent);
 	}
 	
 }

@@ -1,5 +1,10 @@
 package santjoans.client.piezes.view;
 
+import com.google.gwt.canvas.client.Canvas;
+import com.google.gwt.canvas.dom.client.CssColor;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.ImageElement;
+
 import santjoans.client.model.IPieze;
 import santjoans.client.model.Model;
 import santjoans.client.model.ModelDirectory;
@@ -8,19 +13,14 @@ import santjoans.client.util.PiezePixelsEnum;
 import santjoans.client.util.Util;
 import santjoans.client.util.ZoomModeEnum;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.ImageElement;
-import com.google.gwt.widgetideas.graphics.client.Color;
-import com.google.gwt.widgetideas.graphics.client.GWTCanvas;
-
 public class MainView implements IConfiguration, IView {
 	
 	private Boolean LOG_ENABLED = false;
 	
-	private GWTCanvas canvas;
+	private Canvas canvas;
 	private Model model;
 	
-	public MainView(GWTCanvas canvas) {
+	public MainView(Canvas canvas) {
 		this.canvas = canvas;
 		this.model = ModelDirectory.getMainModel();
 	}
@@ -68,25 +68,25 @@ public class MainView implements IConfiguration, IView {
 		}
 		
 		// Guardamos el contexto de dibujo
-		canvas.saveContext();
+		canvas.getContext2d().save();
 		
 		int tmpX = pieze.getX() - startX;
 		int tmpY = pieze.getY() - startY;
 		
 		// Trasladamos el origen
-		canvas.translate(tmpX * PIEZE_MAIN_HALF_DIAGONAL, tmpY * PIEZE_MAIN_HALF_DIAGONAL);
+		canvas.getContext2d().translate(tmpX * PIEZE_MAIN_HALF_DIAGONAL, tmpY * PIEZE_MAIN_HALF_DIAGONAL);
 		
 		// Obtenemos la imagen
 		ImageElement imageElement = pieze.getImageElement(piezePixelsEnum);
 		
 		// Definimos la rotacion
-		canvas.rotate(pieze.getMiniatureRadians());
+		canvas.getContext2d().rotate(pieze.getMiniatureRadians());
 		
 		// Dibujamos la pieza
-		canvas.drawImage( imageElement, -(PIEZE_MAIN_SIDE / 2), -(PIEZE_MAIN_SIDE / 2), PIEZE_MAIN_SIDE, PIEZE_MAIN_SIDE);
+		canvas.getContext2d().drawImage( imageElement, -(PIEZE_MAIN_SIDE / 2), -(PIEZE_MAIN_SIDE / 2), PIEZE_MAIN_SIDE, PIEZE_MAIN_SIDE);
 		
 		// Restauramos el contexto de dibujo
-		canvas.restoreContext();
+		canvas.getContext2d().restore();
 		
 	}
 
@@ -96,26 +96,26 @@ public class MainView implements IConfiguration, IView {
 		}
 		
 		// Guardamos el contexto de dibujo
-		canvas.saveContext();
+		canvas.getContext2d().save();
 		
 		int tmpX = x - startX;
 		int tmpY = y - startY;
 		
 		// Trasladamos el origen
-		canvas.translate(tmpX * PIEZE_MAIN_HALF_DIAGONAL, tmpY * PIEZE_MAIN_HALF_DIAGONAL);
+		canvas.getContext2d().translate(tmpX * PIEZE_MAIN_HALF_DIAGONAL, tmpY * PIEZE_MAIN_HALF_DIAGONAL);
 		
 		// Definimos la rotacion
-		canvas.rotate(Util.getRadians(45));
+		canvas.getContext2d().rotate(Util.getRadians(45));
 		
 		// Dibujamos la pieza
-		canvas.setStrokeStyle(new Color("#A29481"));
-		canvas.setFillStyle(Color.GREY);
-		canvas.setLineWidth(2);
-		canvas.fillRect(-(PIEZE_MAIN_SIDE / 2), -(PIEZE_MAIN_SIDE / 2), PIEZE_MAIN_SIDE, PIEZE_MAIN_SIDE);
-		canvas.strokeRect(-(PIEZE_MAIN_SIDE / 2), -(PIEZE_MAIN_SIDE / 2), PIEZE_MAIN_SIDE, PIEZE_MAIN_SIDE);
+		canvas.getContext2d().setStrokeStyle(CssColor.make("#A29481"));
+		canvas.getContext2d().setFillStyle(CssColor.make("#A9A9A9"));
+		canvas.getContext2d().setLineWidth(2);
+		canvas.getContext2d().fillRect(-(PIEZE_MAIN_SIDE / 2), -(PIEZE_MAIN_SIDE / 2), PIEZE_MAIN_SIDE, PIEZE_MAIN_SIDE);
+		canvas.getContext2d().strokeRect(-(PIEZE_MAIN_SIDE / 2), -(PIEZE_MAIN_SIDE / 2), PIEZE_MAIN_SIDE, PIEZE_MAIN_SIDE);
 		
 		// Restauramos el contexto de dibujo
-		canvas.restoreContext();
+		canvas.getContext2d().restore();
 	}
 	
 	@Override

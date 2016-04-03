@@ -84,13 +84,6 @@
 			<version>0.1.1</version>
 			<systemPath>${basedir}/src/main/webapp/WEB-INF/lib/gwt-image-loader-1.1.1.jar</systemPath>
 		</dependency>
-		<dependency>
-			<groupId>gwt-incubator</groupId>
-			<artifactId>gwt-incubator</artifactId>
-			<scope>system</scope>
-			<version>20100204-r1747</version>
-			<systemPath>${basedir}/src/main/webapp/WEB-INF/lib/gwt-incubator-20100204-r1747.jar</systemPath>
-		</dependency>
 	</dependencies>
 
 

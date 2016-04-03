@@ -1,13 +1,12 @@
 package santjoans.client.piezes.navigator.viewer;
 
+import com.google.gwt.user.client.Event;
+
 import santjoans.client.canvas.ICanvasEventEnabledListener;
 import santjoans.client.model.IPieze;
 import santjoans.client.piezes.navigator.viewer.piezepopup.PiezePopup;
 import santjoans.client.util.IConfiguration;
 import santjoans.client.util.Util;
-
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Event;
 
 public class ViewerWidgetControl extends ViewerWidget implements IConfiguration, ICanvasEventEnabledListener {
 
@@ -26,7 +25,7 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration,
 
 	public ViewerWidgetControl() {
 		super();
-		this.gwtCanvas.setEventListener(this);
+		this.gwtCanvasEvent.setEventListener(this);
 	}
 
 	@Override
@@ -40,20 +39,20 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration,
 			switch (eventType) {
 			case Event.ONMOUSEMOVE:
 				if (cursor == null) {
-					cursor = DOM.getStyleAttribute(gwtCanvas.getElement(), "cursor");
-					DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", "pointer");
+					cursor = gwtCanvasEvent.getStyle().getProperty("cursor");
+					gwtCanvasEvent.getStyle().setProperty("cursor", "pointer");
 				}
 				break;
 			case Event.ONTOUCHMOVE:
 				if (cursor == null) {
-					cursor = DOM.getStyleAttribute(gwtCanvas.getElement(), "cursor");
-					DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", "pointer");
+					cursor = gwtCanvasEvent.getStyle().getProperty("cursor");
+					gwtCanvasEvent.getStyle().setProperty("cursor", "pointer");
 				}
 				break;
 			case Event.ONMOUSEOUT:
 				// El cursor ha salida de la zona de vision
 				if (cursor != null) {
-					DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", cursor);
+					gwtCanvasEvent.getStyle().setProperty("cursor", "pointer");
 					cursor = null;
 				}
 				break;
@@ -61,7 +60,7 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration,
 				// Mientras el cursor estaba en la zona de vision ha pulsado el
 				// raton (ha enganchado a visa)
 				status = Status.ON;
-				DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", "move");
+				gwtCanvasEvent.getStyle().setProperty("cursor", "move");
 				currentContext = initialContext = new MovePiezeContext(controllerViewer.getContext().getZoomMode(),
 						controllerViewer.getContext().getStartX(), controllerViewer.getContext().getStartY());
 				initialPixelX = x;
@@ -70,7 +69,7 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration,
 				// Mientras el cursor estaba en la zona de vision ha pulsado el
 				// raton (ha enganchado a visa)
 				status = Status.ON;
-				DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", "move");
+				gwtCanvasEvent.getStyle().setProperty("cursor", "move");
 				currentContext = initialContext = new MovePiezeContext(controllerViewer.getContext().getZoomMode(),
 						controllerViewer.getContext().getStartX(), controllerViewer.getContext().getStartY());
 				initialPixelX = x;
@@ -96,20 +95,20 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration,
 			case Event.ONMOUSEUP:
 				// Esta moviendose con la vista enganchada (hay que utilizar el
 				// contexto dinamico).
-				DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", "pointer");
+				gwtCanvasEvent.getStyle().setProperty("cursor", "pointer");
 				status = Status.OFF;
 				break;
 			case Event.ONTOUCHSTART:
 				// Esta moviendose con la vista enganchada (hay que utilizar el
 				// contexto dinamico).
-				DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", "pointer");
+				gwtCanvasEvent.getStyle().setProperty("cursor", "pointer");
 				status = Status.OFF;
 				break;
 
 			case Event.ONMOUSEOUT:
 				// Se ha salido del control.
 				if (cursor != null) {
-					DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", cursor);
+					gwtCanvasEvent.getStyle().setProperty("cursor", "cursor");
 					cursor = null;
 				}
 				status = Status.OFF;

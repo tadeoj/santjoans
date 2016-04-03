@@ -1,7 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
-	xmlns:d="urn:import:com.google.gwt.widgetideas.graphics.client">
+	xmlns:c="urn:import:com.google.gwt.canvas.client">	
 	
 	<ui:style>
 		.panel {
@@ -10,8 +10,8 @@
 	</ui:style>
 	
 	<g:HTMLPanel styleName='{style.panel}'>
-		<d:GWTCanvas ui:field="gwtCanvas" >
-		</d:GWTCanvas>
+		<c:Canvas ui:field="gwtCanvas">
+	</c:Canvas>
 	</g:HTMLPanel>
 	
 </ui:UiBinder> 
