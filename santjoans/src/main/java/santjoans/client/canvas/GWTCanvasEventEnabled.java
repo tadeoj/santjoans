@@ -7,7 +7,6 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class GWTCanvasEventEnabled extends Composite {
 
@@ -19,17 +18,11 @@ public class GWTCanvasEventEnabled extends Composite {
 	private ICanvasEventEnabledListener nativeListener;
 
 	public GWTCanvasEventEnabled(Canvas canvas, int coordX, int coordY) {
+		canvas.getCanvasElement().setWidth(coordX);
+		canvas.getCanvasElement().setHeight(coordY);
+
 		this.canvas = canvas;
 
-		VerticalPanel panel = new VerticalPanel();
-		
-		this.canvas.setCoordinateSpaceWidth(coordX);
-		this.canvas.setCoordinateSpaceHeight(coordY);
-		
-		this.canvas.getCanvasElement().setWidth(coordX);
-		this.canvas.getCanvasElement().setHeight(coordY);
-
-		panel.add(this.canvas);
 		initWidget(this.canvas);
 	}
 	

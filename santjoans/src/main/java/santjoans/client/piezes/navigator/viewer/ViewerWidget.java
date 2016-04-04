@@ -42,11 +42,7 @@ abstract public class ViewerWidget extends Composite implements IConfiguration {
 
 		// Se le asigna un color de background
 		// gwtCanvas.setBackgroundColor(Color.GREY);
-
-		// Se asigna el sistema de coordenadas
-		gwtCanvas.getCanvas().setCoordinateSpaceWidth(Util.getCurrentScreenType().getCanvasX());
-		gwtCanvas.getCanvas().setCoordinateSpaceHeight(Util.getCurrentScreenType().getCanvasY());
-
+		
 		// Se crean una lista con las vistas
 		// El orden es importante ya que interesa que las piezas centrales
 		// se pinten despues que las otras para tapar los cuadrados de las
