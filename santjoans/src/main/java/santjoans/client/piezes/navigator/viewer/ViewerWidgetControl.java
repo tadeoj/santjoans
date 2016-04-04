@@ -25,7 +25,7 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration,
 
 	public ViewerWidgetControl() {
 		super();
-		this.gwtCanvas.setEventListener(this);
+		gwtCanvas.setEventListener(this);
 	}
 
 	@Override

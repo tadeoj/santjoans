@@ -22,12 +22,15 @@ public class GWTCanvasEventEnabled extends Composite {
 		this.canvas = canvas;
 
 		VerticalPanel panel = new VerticalPanel();
-		panel.add(canvas);
 		
-		canvas.getCanvasElement().setWidth(coordX);
-		canvas.getCanvasElement().setHeight(coordY);
+		this.canvas.setCoordinateSpaceWidth(coordX);
+		this.canvas.setCoordinateSpaceHeight(coordY);
+		
+		this.canvas.getCanvasElement().setWidth(coordX);
+		this.canvas.getCanvasElement().setHeight(coordY);
 
-		initWidget(canvas);
+		panel.add(this.canvas);
+		initWidget(this.canvas);
 	}
 	
 	public Canvas getCanvas() {
@@ -56,16 +59,13 @@ public class GWTCanvasEventEnabled extends Composite {
 			NativeEvent event = previewEvent.getNativeEvent();
 			Element element = event.getEventTarget().cast();
 
-			if (element == canvas.getCanvasElement()) {
+			if (element == getCanvas().getElement()) {
 				switch (previewEvent.getTypeInt()) {
 				case Event.ONDBLCLICK:
 				case Event.ONMOUSEOVER:
 				case Event.ONMOUSEDOWN:
 				case Event.ONMOUSEUP:
 				case Event.ONMOUSEMOVE:
-				case Event.ONTOUCHMOVE:
-				case Event.ONTOUCHSTART:
-				case Event.ONTOUCHEND:
 				case Event.ONMOUSEOUT:
 					NativeEvent nativeEvent = previewEvent.getNativeEvent();
 					int x = nativeEvent.getClientX() - getAbsoluteLeft() - 1;
@@ -79,8 +79,6 @@ public class GWTCanvasEventEnabled extends Composite {
 			} else {
 				switch (previewEvent.getTypeInt()) {
 				case Event.ONMOUSEMOVE:
-				case Event.ONTOUCHMOVE:
-				case Event.ONTOUCHSTART:
 				case Event.ONMOUSEOVER:
 					nativeListener.firedEvent(0, 0, Event.ONMOUSEOUT);
 				}

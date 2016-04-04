@@ -25,58 +25,63 @@ import santjoans.client.util.ZoomModeEnum;
 
 abstract public class ViewerWidget extends Composite implements IConfiguration {
 
-	private static PiezeViewerWidgetUiBinder uiBinder = GWT
-			.create(PiezeViewerWidgetUiBinder.class);
+	private static PiezeViewerWidgetUiBinder uiBinder = GWT.create(PiezeViewerWidgetUiBinder.class);
 
-	interface PiezeViewerWidgetUiBinder extends
-			UiBinder<Widget, ViewerWidget> {
+	interface PiezeViewerWidgetUiBinder extends UiBinder<Widget, ViewerWidget> {
 	}
 
 	@UiField
 	GWTCanvasEventEnabled gwtCanvas;
-	
+
 	protected ControllerViewer controllerViewer;
 	protected IControllerViewerCommands piezeViewerCommands;
 
 	public ViewerWidget() {
-				
+
 		initWidget(uiBinder.createAndBindUi(this));
-		
+
 		// Se le asigna un color de background
-//		gwtCanvas.setBackgroundColor(Color.GREY);
-		
+		// gwtCanvas.setBackgroundColor(Color.GREY);
+
+		// Se asigna el sistema de coordenadas
+		gwtCanvas.getCanvas().setCoordinateSpaceWidth(Util.getCurrentScreenType().getCanvasX());
+		gwtCanvas.getCanvas().setCoordinateSpaceHeight(Util.getCurrentScreenType().getCanvasY());
+
 		// Se crean una lista con las vistas
-		// El orden es importante ya que interesa que las piezas centrales 
-		// se pinten despues que las otras para tapar los cuadrados de las piezas
+		// El orden es importante ya que interesa que las piezas centrales
+		// se pinten despues que las otras para tapar los cuadrados de las
+		// piezas
 		// an cartabon que estan en la periferia del conjunto central.
 		List<IView> views = new ArrayList<IView>();
 		views.add(new MainView(gwtCanvas));
 		views.add(new CenterView(gwtCanvas));
-		
+
 		// Se crea el controlador de las vistas
 		controllerViewer = new ControllerViewer(gwtCanvas, views);
-		
+
 		// Se preparan el onjeto con las invocaciones asincronas para el viewer
 		piezeViewerCommands = new ViewerCommandsImpl();
 
 	}
 
-	@UiFactory GWTCanvasEventEnabled instantiateGWTCanvas() {
-		return new GWTCanvasEventEnabled(Canvas.createIfSupported(), Util.getCurrentScreenType().getCanvasX(), Util.getCurrentScreenType().getCanvasY());
+	@UiFactory
+	GWTCanvasEventEnabled instantiateGWTCanvas() {
+		return new GWTCanvasEventEnabled(Canvas.createIfSupported(), Util.getCurrentScreenType().getCanvasX(),
+				Util.getCurrentScreenType().getCanvasY());
 	}
-	
+
 	public IControllerViewerCommands getPiezeViewerCommands() {
 		return piezeViewerCommands;
 	}
-	
+
 	public void addPiezeViewerListener(IControllerViewerListener piezeViewerListener) {
 		controllerViewer.addListener(piezeViewerListener);
 	}
-	
+
 	public SyncPiezeLoader firstLoad() {
 		return controllerViewer.firstLoad();
 	}
-	
+
 	private class ViewerCommandsImpl implements IControllerViewerCommands {
 
 		@Override
@@ -128,7 +133,7 @@ abstract public class ViewerWidget extends Composite implements IConfiguration {
 				}
 			});
 		}
-		
+
 		@Override
 		public void setPosition(final int startX, final int startY) {
 			Scheduler.get().scheduleDeferred(new Command() {
