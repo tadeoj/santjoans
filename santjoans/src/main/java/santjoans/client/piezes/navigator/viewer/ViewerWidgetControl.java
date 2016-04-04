@@ -25,7 +25,7 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration,
 
 	public ViewerWidgetControl() {
 		super();
-		this.gwtCanvasEvent.setEventListener(this);
+		this.gwtCanvas.setEventListener(this);
 	}
 
 	@Override
@@ -39,20 +39,20 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration,
 			switch (eventType) {
 			case Event.ONMOUSEMOVE:
 				if (cursor == null) {
-					cursor = gwtCanvasEvent.getStyle().getProperty("cursor");
-					gwtCanvasEvent.getStyle().setProperty("cursor", "pointer");
+					cursor = gwtCanvas.getCanvas().getCanvasElement().getStyle().getProperty("cursor");
+					gwtCanvas.getCanvas().getCanvasElement().getStyle().setProperty("cursor", "pointer");
 				}
 				break;
 			case Event.ONTOUCHMOVE:
 				if (cursor == null) {
-					cursor = gwtCanvasEvent.getStyle().getProperty("cursor");
-					gwtCanvasEvent.getStyle().setProperty("cursor", "pointer");
+					cursor = gwtCanvas.getCanvas().getCanvasElement().getStyle().getProperty("cursor");
+					gwtCanvas.getCanvas().getCanvasElement().getStyle().setProperty("cursor", "pointer");
 				}
 				break;
 			case Event.ONMOUSEOUT:
 				// El cursor ha salida de la zona de vision
 				if (cursor != null) {
-					gwtCanvasEvent.getStyle().setProperty("cursor", "pointer");
+					gwtCanvas.getCanvas().getCanvasElement().getStyle().setProperty("cursor", "pointer");
 					cursor = null;
 				}
 				break;
@@ -60,7 +60,7 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration,
 				// Mientras el cursor estaba en la zona de vision ha pulsado el
 				// raton (ha enganchado a visa)
 				status = Status.ON;
-				gwtCanvasEvent.getStyle().setProperty("cursor", "move");
+				gwtCanvas.getCanvas().getCanvasElement().getStyle().setProperty("cursor", "move");
 				currentContext = initialContext = new MovePiezeContext(controllerViewer.getContext().getZoomMode(),
 						controllerViewer.getContext().getStartX(), controllerViewer.getContext().getStartY());
 				initialPixelX = x;
@@ -69,7 +69,7 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration,
 				// Mientras el cursor estaba en la zona de vision ha pulsado el
 				// raton (ha enganchado a visa)
 				status = Status.ON;
-				gwtCanvasEvent.getStyle().setProperty("cursor", "move");
+				gwtCanvas.getCanvas().getCanvasElement().getStyle().setProperty("cursor", "move");
 				currentContext = initialContext = new MovePiezeContext(controllerViewer.getContext().getZoomMode(),
 						controllerViewer.getContext().getStartX(), controllerViewer.getContext().getStartY());
 				initialPixelX = x;
@@ -95,20 +95,20 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration,
 			case Event.ONMOUSEUP:
 				// Esta moviendose con la vista enganchada (hay que utilizar el
 				// contexto dinamico).
-				gwtCanvasEvent.getStyle().setProperty("cursor", "pointer");
+				gwtCanvas.getCanvas().getCanvasElement().getStyle().setProperty("cursor", "pointer");
 				status = Status.OFF;
 				break;
 			case Event.ONTOUCHSTART:
 				// Esta moviendose con la vista enganchada (hay que utilizar el
 				// contexto dinamico).
-				gwtCanvasEvent.getStyle().setProperty("cursor", "pointer");
+				gwtCanvas.getCanvas().getCanvasElement().getStyle().setProperty("cursor", "pointer");
 				status = Status.OFF;
 				break;
 
 			case Event.ONMOUSEOUT:
 				// Se ha salido del control.
 				if (cursor != null) {
-					gwtCanvasEvent.getStyle().setProperty("cursor", "cursor");
+					gwtCanvas.getCanvas().getCanvasElement().getStyle().setProperty("cursor", "cursor");
 					cursor = null;
 				}
 				status = Status.OFF;

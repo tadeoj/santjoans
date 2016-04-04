@@ -7,12 +7,11 @@ import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.widgetideas.graphics.client.ImageLoader;
 
-import santjoans.client.canvas.GWTCanvasEventEnabled;
 import santjoans.client.model.IPieze;
 import santjoans.client.util.IConfiguration;
 import santjoans.client.util.Util;
@@ -58,18 +57,14 @@ public class PiezePopup extends PopupPanel implements IConfiguration {
 
 	}
 
-
-	@UiField
+	@UiField(provided = true)
 	Canvas gwtCanvas;
-	
-	private GWTCanvasEventEnabled gwtCanvasEvent;
 	
 	public PiezePopup(IPieze pieze, ImageElement piezeImageElment) {
 		// El PopupPanel desaparecera al picar fuera de el. 
 		super(true);
 		
-		gwtCanvasEvent = new GWTCanvasEventEnabled();
-		gwtCanvas = Canvas.wrap(gwtCanvasEvent);
+		gwtCanvas = Canvas.createIfSupported();
 		
 		// Se construye el Widget con el UIBinder
 		Widget widget = uiBinder.createAndBindUi(this);
@@ -78,25 +73,27 @@ public class PiezePopup extends PopupPanel implements IConfiguration {
 		setWidget(widget);
 		
 		// Se pinta la imagen el en Canvas
-		gwtCanvas.getContext2d().save();
+		gwtCanvas.getCanvasElement().getContext2d().save();
 		
 		// Trasladamos el origen
-		gwtCanvas.getContext2d().translate(Util.getCurrentScreenType().getPiezeViewerHeight() / 2, Util.getCurrentScreenType().getPiezeViewerWidth() / 2);
+		gwtCanvas.getCanvasElement().getContext2d().translate(Util.getCurrentScreenType().getPiezeViewerHeight() / 2, Util.getCurrentScreenType().getPiezeViewerWidth() / 2);
 		
 		// Definimos la rotacion
-		gwtCanvas.getContext2d().rotate(pieze.getDetailRadians());
+		gwtCanvas.getCanvasElement().getContext2d().rotate(pieze.getDetailRadians());
 		
 		// Dibujamos la pieza
-		gwtCanvas.getContext2d().drawImage( piezeImageElment, -(Util.getCurrentScreenType().getPiezeViewerSide() / 2), -(Util.getCurrentScreenType().getPiezeViewerSide()/ 2), Util.getCurrentScreenType().getPiezeViewerSide(), Util.getCurrentScreenType().getPiezeViewerSide());
+		gwtCanvas.getCanvasElement().getContext2d().drawImage( piezeImageElment, -(Util.getCurrentScreenType().getPiezeViewerSide() / 2), -(Util.getCurrentScreenType().getPiezeViewerSide()/ 2), Util.getCurrentScreenType().getPiezeViewerSide(), Util.getCurrentScreenType().getPiezeViewerSide());
 		
 		// Restauramos el contexto de dibujo
-		gwtCanvas.getContext2d().restore();
+		gwtCanvas.getCanvasElement().getContext2d().restore();
 
 	}
 
 	@UiFactory Canvas instantiateGWTCanvas() {
-		gwtCanvasEvent = new GWTCanvasEventEnabled(Util.getCurrentScreenType().getPiezeViewerHeight(), Util.getCurrentScreenType().getPiezeViewerWidth());
-		return Canvas.wrap(gwtCanvasEvent);
+		gwtCanvas = Canvas.createIfSupported();
+		gwtCanvas.setCoordinateSpaceHeight(Util.getCurrentScreenType().getPiezeViewerHeight());
+		gwtCanvas.setCoordinateSpaceWidth(Util.getCurrentScreenType().getPiezeViewerWidth());
+		return gwtCanvas;
 	}
 	
 }

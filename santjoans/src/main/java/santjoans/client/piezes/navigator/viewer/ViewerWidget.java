@@ -32,19 +32,14 @@ abstract public class ViewerWidget extends Composite implements IConfiguration {
 			UiBinder<Widget, ViewerWidget> {
 	}
 
-	@UiField(provided = true)
-	Canvas gwtCanvas;
-	
-	protected GWTCanvasEventEnabled gwtCanvasEvent;
+	@UiField
+	GWTCanvasEventEnabled gwtCanvas;
 	
 	protected ControllerViewer controllerViewer;
 	protected IControllerViewerCommands piezeViewerCommands;
 
 	public ViewerWidget() {
-		
-		gwtCanvasEvent = new GWTCanvasEventEnabled();
-		gwtCanvas = Canvas.wrap(gwtCanvasEvent);
-		
+				
 		initWidget(uiBinder.createAndBindUi(this));
 		
 		// Se le asigna un color de background
@@ -67,7 +62,7 @@ abstract public class ViewerWidget extends Composite implements IConfiguration {
 	}
 
 	@UiFactory GWTCanvasEventEnabled instantiateGWTCanvas() {
-		return new GWTCanvasEventEnabled(Util.getCurrentScreenType().getCanvasX(), Util.getCurrentScreenType().getCanvasY());
+		return new GWTCanvasEventEnabled(Canvas.createIfSupported(), Util.getCurrentScreenType().getCanvasX(), Util.getCurrentScreenType().getCanvasY());
 	}
 	
 	public IControllerViewerCommands getPiezeViewerCommands() {

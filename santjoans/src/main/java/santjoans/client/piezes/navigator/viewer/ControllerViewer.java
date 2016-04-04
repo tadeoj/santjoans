@@ -3,9 +3,9 @@ package santjoans.client.piezes.navigator.viewer;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.core.client.GWT;
 
+import santjoans.client.canvas.GWTCanvasEventEnabled;
 import santjoans.client.model.IPieze;
 import santjoans.client.piezes.view.IView;
 import santjoans.client.transaction.TransactionFactory;
@@ -16,7 +16,7 @@ import santjoans.client.util.ZoomModeEnum;
 
 public class ControllerViewer implements IConfiguration {
 	
-	private Canvas canvas;
+	private GWTCanvasEventEnabled canvas;
 	private ZoomModeEnum zoomModeEnum;
 	
 	private List<IView> views;
@@ -28,7 +28,7 @@ public class ControllerViewer implements IConfiguration {
 	
 	private List<IControllerViewerListener> listeners;
 	
-	public ControllerViewer(Canvas canvas, List<IView> views) {
+	public ControllerViewer(GWTCanvasEventEnabled canvas, List<IView> views) {
 		this.canvas = canvas;
 		this.views = views;
 		this.context = new ControllerViewerContextImpl();
@@ -77,8 +77,8 @@ public class ControllerViewer implements IConfiguration {
 		// Se asigna nuevo modo de zoom.
 		this.zoomModeEnum = zoomModeEnum;
 		// Se modifica el sistema de coordenadas en funcion del modo de zoom.
-		canvas.setCoordinateSpaceWidth(this.zoomModeEnum.getMillimetersWidth());
-		canvas.setCoordinateSpaceHeight(this.zoomModeEnum.getMillimetersHeight());
+		canvas.getCanvas().setCoordinateSpaceWidth(this.zoomModeEnum.getMillimetersWidth());
+		canvas.getCanvas().setCoordinateSpaceHeight(this.zoomModeEnum.getMillimetersHeight());
 		// Se ajustan las coordinadas de inicio al modo de zoom actual.
 		int xDiff = oldZoomModeEnum.getUnitWidth() - zoomModeEnum.getUnitWidth();
 		int yDiff = oldZoomModeEnum.getUnitHeight() - zoomModeEnum.getUnitHeight();

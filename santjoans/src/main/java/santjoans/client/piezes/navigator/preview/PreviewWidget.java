@@ -12,6 +12,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.widgetideas.graphics.client.ImageLoader;
 
 import santjoans.client.canvas.GWTCanvasEventEnabled;
 import santjoans.client.piezes.navigator.viewer.IControllerViewerContext;
@@ -25,13 +26,11 @@ abstract public class PreviewWidget extends Composite implements IConfiguration,
 	interface PreviewWidgetUiBinder extends UiBinder<Widget, PreviewWidget> {
 	}
 
-	@UiField(provided = true)
-	Canvas gwtCanvas;
+	@UiField
+	GWTCanvasEventEnabled gwtCanvas;
 	
 	@UiField
 	protected CheckBox checkBox;
-	
-	protected GWTCanvasEventEnabled gwtCanvasEvent;
 	
 	protected PreviewWidgetContext previewWidgetContext;
 
@@ -42,9 +41,6 @@ abstract public class PreviewWidget extends Composite implements IConfiguration,
 		// Se inicia la carga de la imagen.
 		loadPreviewBackground();
 		
-		gwtCanvasEvent = new GWTCanvasEventEnabled();
-		gwtCanvas = Canvas.wrap(gwtCanvasEvent);
-		
 		// Se construye el Widget
 		initWidget(uiBinder.createAndBindUi(this));
 
@@ -52,13 +48,13 @@ abstract public class PreviewWidget extends Composite implements IConfiguration,
 //		gwtCanvas.setBackgroundColor(Color.GREY);
 		
 		// Se asigna el sistema de coordenadas
-		gwtCanvas.setCoordinateSpaceWidth(PREVIEW_X);
-		gwtCanvas.setCoordinateSpaceHeight(PREVIEW_Y);
+		gwtCanvas.getCanvas().setCoordinateSpaceWidth(PREVIEW_X);
+		gwtCanvas.getCanvas().setCoordinateSpaceHeight(PREVIEW_Y);
 		
 	}
 	
 	@UiFactory GWTCanvasEventEnabled instantiateGWTCanvas() {
-		return new GWTCanvasEventEnabled(PREVIEW_X, PREVIEW_Y);
+		return new GWTCanvasEventEnabled(Canvas.createIfSupported(), PREVIEW_X, PREVIEW_Y);
 	}
 	
 	private void loadPreviewBackground() {
@@ -77,7 +73,7 @@ abstract public class PreviewWidget extends Composite implements IConfiguration,
 	protected void updateBackground() {
 		// Si la miniatura esta disponible (si ya se ha cargado) se pinta.
 		if (miniatura != null) {
-			gwtCanvas.getContext2d().drawImage(miniatura, 0, 0);
+			gwtCanvas.getCanvas().getContext2d().drawImage(miniatura, 0, 0);
 		}
 	}
 	
@@ -89,11 +85,11 @@ abstract public class PreviewWidget extends Composite implements IConfiguration,
 		updateBackground();
 
 		// El cuadro rojo
-		gwtCanvas.getContext2d().save();
-		gwtCanvas.getContext2d().setStrokeStyle(CssColor.make("#DC143C"));
-		gwtCanvas.getContext2d().setLineWidth(1);
-		gwtCanvas.getContext2d().strokeRect(context.getRectX(), context.getRectY(), context.getRectWidth(), context.getRectHeight());
-		gwtCanvas.getContext2d().restore();
+		gwtCanvas.getCanvas().getContext2d().save();
+		gwtCanvas.getCanvas().getContext2d().setStrokeStyle(CssColor.make("#DC143C"));
+		gwtCanvas.getCanvas().getContext2d().setLineWidth(1);
+		gwtCanvas.getCanvas().getContext2d().strokeRect(context.getRectX(), context.getRectY(), context.getRectWidth(), context.getRectHeight());
+		gwtCanvas.getCanvas().getContext2d().restore();
 	}
 	
 	@Override

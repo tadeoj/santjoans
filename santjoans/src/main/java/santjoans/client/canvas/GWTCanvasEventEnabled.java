@@ -1,28 +1,37 @@
 package santjoans.client.canvas;
 
-import com.google.gwt.dom.client.CanvasElement;
+import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class GWTCanvasEventEnabled extends CanvasElement {
-	
+public class GWTCanvasEventEnabled extends Composite {
+
 	private int coordX;
 	private int coordY;
-	
+
+	private Canvas canvas;
 	private HandlerRegistration handlerRegistration;
 	private ICanvasEventEnabledListener nativeListener;
-	
-	public GWTCanvasEventEnabled() {
-		super();
+
+	public GWTCanvasEventEnabled(Canvas canvas, int coordX, int coordY) {
+		this.canvas = canvas;
+
+		VerticalPanel panel = new VerticalPanel();
+		panel.add(canvas);
+		
+		canvas.getCanvasElement().setWidth(coordX);
+		canvas.getCanvasElement().setHeight(coordY);
+
+		initWidget(canvas);
 	}
 	
-	public GWTCanvasEventEnabled(int coordX, int coordY) {
-		super();
-		this.setWidth(coordX);
-		this.setHeight(coordY);
+	public Canvas getCanvas() {
+		return canvas;
 	}
 
 	public void setEventListener(ICanvasEventEnabledListener listener) {
@@ -34,20 +43,20 @@ public class GWTCanvasEventEnabled extends CanvasElement {
 			}
 		} else {
 			if (handlerRegistration != null) {
-				throw new IllegalStateException("Ya hay un CanvasPreviewHandler para el canvas." );
+				throw new IllegalStateException("Ya hay un CanvasPreviewHandler para el canvas.");
 			}
 			handlerRegistration = Event.addNativePreviewHandler(new CanvasPreviewHandler());
 		}
 	}
-	
+
 	class CanvasPreviewHandler implements Event.NativePreviewHandler {
 		@Override
 		public void onPreviewNativeEvent(NativePreviewEvent previewEvent) {
-			
+
 			NativeEvent event = previewEvent.getNativeEvent();
 			Element element = event.getEventTarget().cast();
-			
-			if (element == GWTCanvasEventEnabled.this) {
+
+			if (element == canvas.getCanvasElement()) {
 				switch (previewEvent.getTypeInt()) {
 				case Event.ONDBLCLICK:
 				case Event.ONMOUSEOVER:
@@ -78,5 +87,5 @@ public class GWTCanvasEventEnabled extends CanvasElement {
 			}
 		}
 	}
-	
+
 }

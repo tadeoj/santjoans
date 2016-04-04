@@ -1,9 +1,5 @@
 package santjoans.client.presentation;
 
-import santjoans.client.presentation.imageviewer.ImageViewerTool;
-import santjoans.client.resources.ISantjoansResources;
-import santjoans.client.transaction.sync.IPiezeLoaderListener;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -16,6 +12,10 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+
+import santjoans.client.presentation.imageviewer.ImageViewerTool;
+import santjoans.client.resources.ISantjoansResources;
+import santjoans.client.transaction.sync.IPiezeLoaderListener;
 
 public class PresentationWidget extends Composite implements ClickHandler, IPiezeLoaderListener {
 	

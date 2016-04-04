@@ -81,11 +81,17 @@
 			<groupId>gwt-image-loader</groupId>
 			<artifactId>gwt-image-loader</artifactId>
 			<scope>system</scope>
-			<version>0.1.1</version>
-			<systemPath>${basedir}/src/main/webapp/WEB-INF/lib/gwt-image-loader-1.1.1.jar</systemPath>
+			<version>1.1.4</version>
+			<systemPath>${basedir}/src/main/webapp/WEB-INF/lib/gwt-image-loader-1.1.4.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>gwt-incubator</groupId>
+			<artifactId>gwt-incubator</artifactId>
+			<scope>system</scope>
+			<version>20101117-r1766</version>
+			<systemPath>${basedir}/src/main/webapp/WEB-INF/lib/gwt-incubator-20101117-r1766.jar</systemPath>
 		</dependency>
 	</dependencies>
-
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
@@ -116,7 +122,7 @@
 				</executions>
 				<configuration>
 					<!-- <inplace>true</inplace> -->
-<!-- 					<noServer>true</noServer> -->
+					<!-- <noServer>true</noServer> -->
 
 					<logLevel>INFO</logLevel>
 					<copyWebapp>true</copyWebapp>
