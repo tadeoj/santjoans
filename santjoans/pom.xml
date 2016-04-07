@@ -127,14 +127,9 @@
 					<logLevel>INFO</logLevel>
 					<copyWebapp>true</copyWebapp>
 					<hostedWebapp>${webappDirectory}</hostedWebapp>
-					<modules>
-						<module>santjoans.Santjoans</module>
-					</modules>
+					<module>santjoans.Santjoans</module>
 					<!-- URL that should be opened by DevMode (gwt:run). -->
 					<runTarget>Santjoans.html</runTarget>
-					<!-- Ask GWT to create the Story of Your Compile (SOYC) (gwt:compile) -->
-					<compileReport>true</compileReport>
-
 				</configuration>
 			</plugin>
 

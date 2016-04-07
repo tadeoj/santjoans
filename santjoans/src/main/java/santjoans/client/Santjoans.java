@@ -24,6 +24,8 @@ public class Santjoans implements EntryPoint, IConfiguration {
 	
 	public void onModuleLoad() {
 		
+		GWT.log("Se entra en el entry point", null);
+		
 		// Se obtiene el root panel
 		root = RootLayoutPanel.get();
 		
@@ -34,6 +36,8 @@ public class Santjoans implements EntryPoint, IConfiguration {
 		presentation = new PresentationWidget(new SwitchToViewer());
 		presentation.install();
 		History.newItem("presentation");
+		
+		GWT.log("Se ha pasado el primer breakPoint");
 		
 		// Se crea el widget que corresponde a la navegacion
 		navigator = new NavigatorWidget(presentation);
@@ -59,7 +63,7 @@ public class Santjoans implements EntryPoint, IConfiguration {
 	}
 	
 	/* 
-	 * Este interface es utilizado por el Widget de presentación para 
+	 * Este interface es utilizado por el Widget de presentaciï¿½n para 
 	 * ocultar la presentacion y mostrar el mosaico.
 	 */
 	public class SwitchToViewer implements Runnable {

@@ -1,6 +1,5 @@
 package santjoans.client.piezes.navigator.preview;
 
-import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.CssColor;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.ImageElement;
@@ -47,14 +46,10 @@ abstract public class PreviewWidget extends Composite implements IConfiguration,
 //		// Se le asigna un color de background
 //		gwtCanvas.setBackgroundColor(Color.GREY);
 		
-		// Se asigna el sistema de coordenadas
-		gwtCanvas.getCanvas().setCoordinateSpaceWidth(PREVIEW_X);
-		gwtCanvas.getCanvas().setCoordinateSpaceHeight(PREVIEW_Y);
-		
 	}
 	
 	@UiFactory GWTCanvasEventEnabled instantiateGWTCanvas() {
-		return new GWTCanvasEventEnabled(Canvas.createIfSupported(), PREVIEW_X, PREVIEW_Y);
+		return new GWTCanvasEventEnabled(PREVIEW_X, PREVIEW_Y);
 	}
 	
 	private void loadPreviewBackground() {

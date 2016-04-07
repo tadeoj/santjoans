@@ -17,11 +17,14 @@ public class GWTCanvasEventEnabled extends Composite {
 	private HandlerRegistration handlerRegistration;
 	private ICanvasEventEnabledListener nativeListener;
 
-	public GWTCanvasEventEnabled(Canvas canvas, int coordX, int coordY) {
+	public GWTCanvasEventEnabled(int coordX, int coordY) {
+		
+		this.canvas = Canvas.createIfSupported();
 		canvas.getCanvasElement().setWidth(coordX);
 		canvas.getCanvasElement().setHeight(coordY);
-
-		this.canvas = canvas;
+		
+		canvas.setCoordinateSpaceWidth(coordX);
+		canvas.setCoordinateSpaceHeight(coordY);
 
 		initWidget(this.canvas);
 	}

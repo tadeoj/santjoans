@@ -57,15 +57,13 @@ public class PiezePopup extends PopupPanel implements IConfiguration {
 
 	}
 
-	@UiField(provided = true)
+	@UiField
 	Canvas gwtCanvas;
 	
 	public PiezePopup(IPieze pieze, ImageElement piezeImageElment) {
 		// El PopupPanel desaparecera al picar fuera de el. 
 		super(true);
-		
-		gwtCanvas = Canvas.createIfSupported();
-		
+				
 		// Se construye el Widget con el UIBinder
 		Widget widget = uiBinder.createAndBindUi(this);
 		
@@ -91,6 +89,8 @@ public class PiezePopup extends PopupPanel implements IConfiguration {
 
 	@UiFactory Canvas instantiateGWTCanvas() {
 		gwtCanvas = Canvas.createIfSupported();
+		gwtCanvas.getCanvasElement().setHeight(Util.getCurrentScreenType().getPiezeViewerHeight());
+		gwtCanvas.getCanvasElement().setWidth(Util.getCurrentScreenType().getPiezeViewerWidth());
 		gwtCanvas.setCoordinateSpaceHeight(Util.getCurrentScreenType().getPiezeViewerHeight());
 		gwtCanvas.setCoordinateSpaceWidth(Util.getCurrentScreenType().getPiezeViewerWidth());
 		return gwtCanvas;
