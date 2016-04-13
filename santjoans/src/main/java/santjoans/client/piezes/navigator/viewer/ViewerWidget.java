@@ -30,7 +30,7 @@ abstract public class ViewerWidget extends Composite implements IConfiguration {
 	}
 
 	@UiField
-	GWTCanvasEventEnabled gwtCanvas;
+	protected GWTCanvasEventEnabled gwtCanvas;
 
 	protected ControllerViewer controllerViewer;
 	protected IControllerViewerCommands piezeViewerCommands;

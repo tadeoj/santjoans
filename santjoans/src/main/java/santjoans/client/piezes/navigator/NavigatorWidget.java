@@ -1,5 +1,12 @@
 package santjoans.client.piezes.navigator;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.Widget;
+
 import santjoans.client.imagebutton.IButtonPressed;
 import santjoans.client.imagebutton.ImageButton;
 import santjoans.client.model.ModelLoader;
@@ -13,13 +20,6 @@ import santjoans.client.piezes.navigator.zoom.ZoomWidget;
 import santjoans.client.resources.ISantjoansResources;
 import santjoans.client.transaction.sync.IPiezeLoaderListener;
 import santjoans.client.transaction.sync.SyncPiezeLoader;
-
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 public class NavigatorWidget extends Composite implements IButtonPressed {
 
@@ -65,7 +65,7 @@ public class NavigatorWidget extends Composite implements IButtonPressed {
 		helpImageButton.setButtonPressedListener(this);
 		
 		// Todos escuchan los cambiosn el Viewer
-		viewer.addPiezeViewerListener(previewWidget);
+		//viewer.addPiezeViewerListener(previewWidget);
 		viewer.addPiezeViewerListener(directionWidget);
 		viewer.addPiezeViewerListener(zoomWidget);
 		

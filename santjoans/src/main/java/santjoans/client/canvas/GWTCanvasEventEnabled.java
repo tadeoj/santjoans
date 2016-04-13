@@ -20,8 +20,8 @@ public class GWTCanvasEventEnabled extends Composite {
 	public GWTCanvasEventEnabled(int coordX, int coordY) {
 		
 		this.canvas = Canvas.createIfSupported();
-		canvas.getCanvasElement().setWidth(coordX);
-		canvas.getCanvasElement().setHeight(coordY);
+		canvas.setWidth(coordX + "px");
+		canvas.setHeight(coordY + "px");
 		
 		canvas.setCoordinateSpaceWidth(coordX);
 		canvas.setCoordinateSpaceHeight(coordY);

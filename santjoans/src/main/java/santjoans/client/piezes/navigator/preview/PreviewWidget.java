@@ -26,7 +26,7 @@ abstract public class PreviewWidget extends Composite implements IConfiguration,
 	}
 
 	@UiField
-	GWTCanvasEventEnabled gwtCanvas;
+	protected GWTCanvasEventEnabled gwtCanvas;
 	
 	@UiField
 	protected CheckBox checkBox;
