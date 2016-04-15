@@ -1,26 +1,25 @@
 package santjoans.client.presentation.imageviewer;
 
-import santjoans.client.util.Util;
-
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.reveregroup.gwt.imagepreloader.FitImage;
 import com.reveregroup.gwt.imagepreloader.FitImageLoadEvent;
 import com.reveregroup.gwt.imagepreloader.FitImageLoadHandler;
 
+import santjoans.client.util.Util;
+
 public class ImageViewerTool {
 
 	public static void setBusyCursor() {
 		Element element = RootPanel.getBodyElement();
-		DOM.setStyleAttribute(element, "cursor", "wait");
+		element.setAttribute("cursor", "wait");
 	}
 	
 	public static void setDefaultCursor() {
 		Element element = RootPanel.getBodyElement();
-		DOM.setStyleAttribute(element, "cursor", "default");
+		element.setAttribute("cursor", "default");
 	}
 
 	static private void loadOneImage(ImageResource imageResource, final IDisplayOneImage displayImage) {
@@ -38,13 +37,13 @@ public class ImageViewerTool {
 		        }
 			}
 		});
-		fitImage.setUrl(imageResource.getURL());
+		fitImage.setUrl(imageResource.getSafeUri().asString());
 	}
 	
 	static private class DisplayLandscape implements IDisplayOneImage {
 		@Override
 		public void display(FitImage fitImage) {
-			// Ajustamos el tamañño de la imagen
+			// Ajustamos el tamaï¿½ï¿½o de la imagen
 			fitImage.setMaxWidth(Util.getCurrentScreenType().getImageViewerToolMaxWidthLandscape());
 			// Instanciamos el widget
 			OneImageViewerWidget imageViewerWidget = new OneImageViewerWidget(fitImage);
@@ -66,7 +65,7 @@ public class ImageViewerTool {
 	static private class DisplayPortrait implements IDisplayOneImage {
 		@Override
 		public void display(FitImage fitImage) {
-			// Ajustamos el tamañño de la imagen
+			// Ajustamos el tamaï¿½ï¿½o de la imagen
 			fitImage.setMaxHeight(Util.getCurrentScreenType().getImageViewerToolMaxWidthPortrait());
 			// Instanciamos el widget
 			OneImageViewerWidget imageViewerWidget = new OneImageViewerWidget(fitImage);
@@ -111,7 +110,7 @@ public class ImageViewerTool {
 			
 		}
 		for (int i = 0; i < imageResources.length; i++) {
-			fitImages[i].setUrl(imageResources[i].getURL());
+			fitImages[i].setUrl(imageResources[i].getSafeUri().asString());
 		}
 	}
 	

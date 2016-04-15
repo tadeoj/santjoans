@@ -58,9 +58,9 @@ public class PresentationWidget extends Composite implements ClickHandler, IPiez
 	}
 	
 	public void install() {
-		palacio.setUrl(ISantjoansResources.INSTANCE.palacioSmall().getURL());
-		piezas.setUrl(ISantjoansResources.INSTANCE.piezasSmall().getURL());
-		museo.setUrl(ISantjoansResources.INSTANCE.museoSmall().getURL());
+		palacio.setUrl(ISantjoansResources.INSTANCE.palacioSmall().getSafeUri().asString());
+		piezas.setUrl(ISantjoansResources.INSTANCE.piezasSmall().getSafeUri().asString());
+		museo.setUrl(ISantjoansResources.INSTANCE.museoSmall().getSafeUri().asString());
 		
 		palacio.addClickHandler(new MouseClickHandlerImpl());
 		piezas.addClickHandler(new MouseClickHandlerImpl());
