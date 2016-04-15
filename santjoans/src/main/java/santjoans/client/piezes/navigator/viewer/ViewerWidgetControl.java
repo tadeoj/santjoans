@@ -43,12 +43,6 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration,
 					gwtCanvas.getCanvas().getCanvasElement().getStyle().setProperty("cursor", "pointer");
 				}
 				break;
-			case Event.ONTOUCHMOVE:
-				if (cursor == null) {
-					cursor = gwtCanvas.getCanvas().getCanvasElement().getStyle().getProperty("cursor");
-					gwtCanvas.getCanvas().getCanvasElement().getStyle().setProperty("cursor", "pointer");
-				}
-				break;
 			case Event.ONMOUSEOUT:
 				// El cursor ha salida de la zona de vision
 				if (cursor != null) {
@@ -57,15 +51,6 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration,
 				}
 				break;
 			case Event.ONMOUSEDOWN:
-				// Mientras el cursor estaba en la zona de vision ha pulsado el
-				// raton (ha enganchado a visa)
-				status = Status.ON;
-				gwtCanvas.getCanvas().getCanvasElement().getStyle().setProperty("cursor", "move");
-				currentContext = initialContext = new MovePiezeContext(controllerViewer.getContext().getZoomMode(),
-						controllerViewer.getContext().getStartX(), controllerViewer.getContext().getStartY());
-				initialPixelX = x;
-				initialPixelY = y;
-			case Event.ONTOUCHSTART:
 				// Mientras el cursor estaba en la zona de vision ha pulsado el
 				// raton (ha enganchado a visa)
 				status = Status.ON;
@@ -85,26 +70,12 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration,
 					moveStep(currentContext);
 				}
 				break;
-			case Event.ONTOUCHMOVE:
-				// Esta moviendose con la visa enganchada hay que utilizarel
-				// contexto dinamico).
-				if (updateCurrentContext(x, y, false)) {
-					moveStep(currentContext);
-				}
-				break;
 			case Event.ONMOUSEUP:
 				// Esta moviendose con la vista enganchada (hay que utilizar el
 				// contexto dinamico).
 				gwtCanvas.getCanvas().getCanvasElement().getStyle().setProperty("cursor", "pointer");
 				status = Status.OFF;
 				break;
-			case Event.ONTOUCHSTART:
-				// Esta moviendose con la vista enganchada (hay que utilizar el
-				// contexto dinamico).
-				gwtCanvas.getCanvas().getCanvasElement().getStyle().setProperty("cursor", "pointer");
-				status = Status.OFF;
-				break;
-
 			case Event.ONMOUSEOUT:
 				// Se ha salido del control.
 				if (cursor != null) {

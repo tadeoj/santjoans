@@ -9,7 +9,6 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Image;
 
 public class ImageButton extends Image {
@@ -65,14 +64,14 @@ public class ImageButton extends Image {
 		addMouseOverHandler(new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				cursor = DOM.getStyleAttribute(getElement(), "cursor");
-				DOM.setStyleAttribute(getElement(), "cursor", "pointer");
+				cursor = getElement().getStyle().getProperty("cursor");
+				getElement().getStyle().setProperty("cursor", "wait");
 			}
 		});
 		addMouseOutHandler(new MouseOutHandler() {
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
-				DOM.setStyleAttribute(getElement(), "cursor", cursor);
+				getElement().getStyle().setProperty("cursor", cursor);
 				if (state == State.PRESSED)
 					state = State.UNPRESSED;
 			}
@@ -80,9 +79,12 @@ public class ImageButton extends Image {
 	}
 
 	public void updateState() {
-		DOM.setStyleAttribute(getElement(), "margin", state == State.PRESSED ? PRESSED_MARGIN : UNPRESSED_MARGIN);
-		DOM.setStyleAttribute(getElement(), "opacity", state == State.DISABLED ? DISABLED_OPACITY : ENABLED_OPACITY);
-		DOM.setStyleAttribute(getElement(), "filter", state == State.DISABLED ? DISABLED_FILTER : ENABLED_FILTER);
+//		getElement().setAttribute("margin", state == State.PRESSED ? PRESSED_MARGIN : UNPRESSED_MARGIN);
+//		getElement().setAttribute("opacity", state == State.DISABLED ? DISABLED_OPACITY : ENABLED_OPACITY);
+//		getElement().setAttribute("filter", state == State.DISABLED ? DISABLED_FILTER : ENABLED_FILTER);
+		getElement().getStyle().setProperty("margin", state == State.PRESSED ? PRESSED_MARGIN : UNPRESSED_MARGIN);
+		getElement().getStyle().setProperty("opacity", state == State.DISABLED ? DISABLED_OPACITY : ENABLED_OPACITY);
+		getElement().getStyle().setProperty("filter", state == State.DISABLED ? DISABLED_FILTER : ENABLED_FILTER);
 	}
 	
 	public void setButtonPressedListener(IButtonPressed buttonPressed) {

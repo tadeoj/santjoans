@@ -1,8 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" 
-	xmlns:d="urn:import:santjoans.client.canvas">
-	
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:d="urn:import:santjoans.client.canvas">
+
 	<ui:style>
 	.vertical-panel {
 		margin-top: 15px;
@@ -17,8 +16,9 @@
 
 	<g:VerticalPanel styleName='{style.vertical-panel}'>
 		<g:cell horizontalAlignment='ALIGN_CENTER'>
-			<d:GWTCanvasEventEnabled ui:field="gwtCanvas" styleName='{style.canvas}'>
-	</d:GWTCanvasEventEnabled>
+			<d:GWTCanvasEventEnabled ui:field="gwtCanvas"
+				styleName='{style.canvas}'>
+			</d:GWTCanvasEventEnabled>
 		</g:cell>
 		<g:cell horizontalAlignment='ALIGN_CENTER'>
 			<g:CheckBox ui:field="checkBox">Sincronizar durante el movimiento</g:CheckBox>
