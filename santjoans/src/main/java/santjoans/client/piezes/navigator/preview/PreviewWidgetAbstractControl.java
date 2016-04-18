@@ -18,6 +18,7 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 	
 	protected IControllerViewerCommands piezeViewerCommands;
 	
+	private String cursor = null;
 	private Status status = Status.OFF;
 	
 	protected int initialPixelX;
@@ -58,8 +59,8 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 				// Mientras no engancha la vista el movimiento el contexto de referencia es el del preview
 				if (isInViewWindow(previewWidgetContext, x, y)) {
 					// El cursor ha entrado en la zona de vision
-					gwtCanvas.getCanvas().getCanvasElement().getStyle().getProperty("cursor");
-					gwtCanvas.getCanvas().getCanvasElement().getStyle().setProperty("cursor", "pointer");
+					cursor = gwtCanvas.getCanvas().getElement().getStyle().getProperty("cursor");
+					gwtCanvas.getCanvas().getElement().getStyle().setProperty("cursor", "pointer");
 					status = Status.PREPARED;
 				}
 				break;
@@ -71,20 +72,20 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 				// Mientras no engancha la vista el movimiento el contexto de referencia es el del preview
 				if (!isInViewWindow(previewWidgetContext, x, y)) {
 					// El cursor ha salida de la zona de vision
-					gwtCanvas.getCanvas().getCanvasElement().getStyle().setProperty("cursor", "cursor");
+					gwtCanvas.getCanvas().getElement().getStyle().setProperty("cursor", cursor);
 					status = Status.OFF;
 				}
 				break;
 			case Event.ONMOUSEOUT:
 				// El cursor ha salida de la zona de vision
-				gwtCanvas.getCanvas().getCanvasElement().getStyle().setProperty("cursor", "cursor");
+				gwtCanvas.getCanvas().getElement().getStyle().setProperty("cursor", cursor);
 				status = Status.OFF;
 				break;
 			case Event.ONMOUSEDOWN:
 				// Mientras no engancha la vista el movimiento el contexto de referencia es el del preview
 				if (isInViewWindow(previewWidgetContext, x, y)) {
 					// Mientras el cursor estaba en la zona de vision ha pulsado el raton (ha enganchado a visa)
-					gwtCanvas.getCanvas().getCanvasElement().getStyle().setProperty("cursor", "move");
+					gwtCanvas.getCanvas().getElement().getStyle().setProperty("cursor", "move");
 					status = Status.ON;
 					currentContext = initialContext = new PreviewWidgetContext(previewWidgetContext.getZoomMode(), previewWidgetContext.getStartX(), previewWidgetContext.getStartY());
 					initialPixelX = x;
@@ -112,14 +113,14 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 				break;
 			case Event.ONMOUSEUP:
 				// Esta moviendose con la vista enganchada (hay que utilizar el contexto dinamico).
-				gwtCanvas.getCanvas().getCanvasElement().getStyle().setProperty("cursor", "pointer");
+				gwtCanvas.getCanvas().getElement().getStyle().setProperty("cursor", "pointer");
 				status = Status.PREPARED;
 				updateCurrentContext(x, y, true);
 				moveFinish(currentContext);
 				break;
 			case Event.ONMOUSEOUT:
 				// Se ha salido del control.
-				gwtCanvas.getCanvas().getCanvasElement().getStyle().setProperty("cursor", "cursor");
+				gwtCanvas.getCanvas().getElement().getStyle().setProperty("cursor", cursor);
 				status = Status.OFF;
 				//updateCurrentContext(x, y, true);
 				moveFinish(currentContext);

@@ -89,8 +89,8 @@ public class PiezePopup extends PopupPanel implements IConfiguration {
 
 	@UiFactory Canvas instantiateGWTCanvas() {
 		gwtCanvas = Canvas.createIfSupported();
-		gwtCanvas.getCanvasElement().setHeight(Util.getCurrentScreenType().getPiezeViewerHeight());
-		gwtCanvas.getCanvasElement().setWidth(Util.getCurrentScreenType().getPiezeViewerWidth());
+		gwtCanvas.setHeight(Util.getCurrentScreenType().getPiezeViewerHeight() + "px");
+		gwtCanvas.setWidth(Util.getCurrentScreenType().getPiezeViewerWidth() + "px");
 		gwtCanvas.setCoordinateSpaceHeight(Util.getCurrentScreenType().getPiezeViewerHeight());
 		gwtCanvas.setCoordinateSpaceWidth(Util.getCurrentScreenType().getPiezeViewerWidth());
 		return gwtCanvas;

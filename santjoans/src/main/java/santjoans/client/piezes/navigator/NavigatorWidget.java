@@ -65,7 +65,7 @@ public class NavigatorWidget extends Composite implements IButtonPressed {
 		helpImageButton.setButtonPressedListener(this);
 		
 		// Todos escuchan los cambiosn el Viewer
-		//viewer.addPiezeViewerListener(previewWidget);
+		viewer.addPiezeViewerListener(previewWidget);
 		viewer.addPiezeViewerListener(directionWidget);
 		viewer.addPiezeViewerListener(zoomWidget);
 		

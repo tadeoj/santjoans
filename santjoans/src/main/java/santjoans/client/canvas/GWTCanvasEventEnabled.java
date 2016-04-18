@@ -55,7 +55,7 @@ public class GWTCanvasEventEnabled extends Composite {
 			NativeEvent event = previewEvent.getNativeEvent();
 			Element element = event.getEventTarget().cast();
 
-			if (element == getCanvas().getElement()) {
+			if (element == canvas.getElement()) {
 				switch (previewEvent.getTypeInt()) {
 				case Event.ONDBLCLICK:
 				case Event.ONMOUSEOVER:

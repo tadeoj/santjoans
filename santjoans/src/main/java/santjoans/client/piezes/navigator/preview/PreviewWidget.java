@@ -45,6 +45,8 @@ abstract public class PreviewWidget extends Composite implements IConfiguration,
 
 //		// Se le asigna un color de background
 //		gwtCanvas.setBackgroundColor(Color.GREY);
+	
+//		gwtCanvas.getCanvas().setSize(PREVIEW_X + "px", PREVIEW_Y + "px");
 		
 	}
 	
