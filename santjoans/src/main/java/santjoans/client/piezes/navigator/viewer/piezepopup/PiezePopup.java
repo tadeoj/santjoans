@@ -4,6 +4,7 @@ import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.ImageElement;
+import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
@@ -25,12 +26,12 @@ public class PiezePopup extends PopupPanel implements IConfiguration {
 	
 	private static void setBusyCursor() {
 		Element element = RootPanel.getBodyElement();
-		element.getStyle().setProperty("cursor", "wait");
+		element.getStyle().setCursor(Cursor.WAIT);
 	}
 	
 	private static void setDefaultCursor() {
 		Element element = RootPanel.getBodyElement();
-		element.getStyle().setProperty("cursor", "default");
+		element.getStyle().setCursor(Cursor.DEFAULT);
 	}
 
 	static public void displayPieze(final IPieze pieze) {

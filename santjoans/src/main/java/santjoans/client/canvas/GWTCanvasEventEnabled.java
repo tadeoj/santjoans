@@ -25,7 +25,7 @@ public class GWTCanvasEventEnabled extends Composite {
 		
 		canvas.setCoordinateSpaceWidth(coordX);
 		canvas.setCoordinateSpaceHeight(coordY);
-
+		
 		initWidget(this.canvas);
 	}
 	
@@ -55,7 +55,7 @@ public class GWTCanvasEventEnabled extends Composite {
 			NativeEvent event = previewEvent.getNativeEvent();
 			Element element = event.getEventTarget().cast();
 
-			if (element == canvas.getElement()) {
+			if (element == getElement()) {
 				switch (previewEvent.getTypeInt()) {
 				case Event.ONDBLCLICK:
 				case Event.ONMOUSEOVER:
