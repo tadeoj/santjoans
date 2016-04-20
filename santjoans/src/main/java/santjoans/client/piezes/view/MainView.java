@@ -1,10 +1,10 @@
 package santjoans.client.piezes.view;
 
+import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.CssColor;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.ImageElement;
 
-import santjoans.client.canvas.GWTCanvasEventEnabled;
 import santjoans.client.model.IPieze;
 import santjoans.client.model.Model;
 import santjoans.client.model.ModelDirectory;
@@ -17,10 +17,10 @@ public class MainView implements IConfiguration, IView {
 	
 	private Boolean LOG_ENABLED = false;
 	
-	private GWTCanvasEventEnabled canvas;
+	private Canvas canvas;
 	private Model model;
 	
-	public MainView(GWTCanvasEventEnabled canvas) {
+	public MainView(Canvas canvas) {
 		this.canvas = canvas;
 		this.model = ModelDirectory.getMainModel();
 	}
@@ -68,25 +68,25 @@ public class MainView implements IConfiguration, IView {
 		}
 		
 		// Guardamos el contexto de dibujo
-		canvas.getCanvas().getCanvasElement().getContext2d().save();
+		canvas.getCanvasElement().getContext2d().save();
 		
 		int tmpX = pieze.getX() - startX;
 		int tmpY = pieze.getY() - startY;
 		
 		// Trasladamos el origen
-		canvas.getCanvas().getCanvasElement().getContext2d().translate(tmpX * PIEZE_MAIN_HALF_DIAGONAL, tmpY * PIEZE_MAIN_HALF_DIAGONAL);
+		canvas.getCanvasElement().getContext2d().translate(tmpX * PIEZE_MAIN_HALF_DIAGONAL, tmpY * PIEZE_MAIN_HALF_DIAGONAL);
 		
 		// Obtenemos la imagen
 		ImageElement imageElement = pieze.getImageElement(piezePixelsEnum);
 		
 		// Definimos la rotacion
-		canvas.getCanvas().getCanvasElement().getContext2d().rotate(pieze.getMiniatureRadians());
+		canvas.getCanvasElement().getContext2d().rotate(pieze.getMiniatureRadians());
 		
 		// Dibujamos la pieza
-		canvas.getCanvas().getCanvasElement().getContext2d().drawImage( imageElement, -(PIEZE_MAIN_SIDE / 2), -(PIEZE_MAIN_SIDE / 2), PIEZE_MAIN_SIDE, PIEZE_MAIN_SIDE);
+		canvas.getCanvasElement().getContext2d().drawImage( imageElement, -(PIEZE_MAIN_SIDE / 2), -(PIEZE_MAIN_SIDE / 2), PIEZE_MAIN_SIDE, PIEZE_MAIN_SIDE);
 		
 		// Restauramos el contexto de dibujo
-		canvas.getCanvas().getCanvasElement().getContext2d().restore();
+		canvas.getCanvasElement().getContext2d().restore();
 		
 	}
 
@@ -96,26 +96,26 @@ public class MainView implements IConfiguration, IView {
 		}
 		
 		// Guardamos el contexto de dibujo
-		canvas.getCanvas().getCanvasElement().getContext2d().save();
+		canvas.getCanvasElement().getContext2d().save();
 		
 		int tmpX = x - startX;
 		int tmpY = y - startY;
 		
 		// Trasladamos el origen
-		canvas.getCanvas().getCanvasElement().getContext2d().translate(tmpX * PIEZE_MAIN_HALF_DIAGONAL, tmpY * PIEZE_MAIN_HALF_DIAGONAL);
+		canvas.getCanvasElement().getContext2d().translate(tmpX * PIEZE_MAIN_HALF_DIAGONAL, tmpY * PIEZE_MAIN_HALF_DIAGONAL);
 		
 		// Definimos la rotacion
-		canvas.getCanvas().getCanvasElement().getContext2d().rotate(Util.getRadians(45));
+		canvas.getCanvasElement().getContext2d().rotate(Util.getRadians(45));
 		
 		// Dibujamos la pieza
-		canvas.getCanvas().getCanvasElement().getContext2d().setStrokeStyle(CssColor.make("#A29481"));
-		canvas.getCanvas().getCanvasElement().getContext2d().setFillStyle(CssColor.make("#A9A9A9"));
-		canvas.getCanvas().getCanvasElement().getContext2d().setLineWidth(2);
-		canvas.getCanvas().getCanvasElement().getContext2d().fillRect(-(PIEZE_MAIN_SIDE / 2), -(PIEZE_MAIN_SIDE / 2), PIEZE_MAIN_SIDE, PIEZE_MAIN_SIDE);
-		canvas.getCanvas().getCanvasElement().getContext2d().strokeRect(-(PIEZE_MAIN_SIDE / 2), -(PIEZE_MAIN_SIDE / 2), PIEZE_MAIN_SIDE, PIEZE_MAIN_SIDE);
+		canvas.getCanvasElement().getContext2d().setStrokeStyle(CssColor.make("#A29481"));
+		canvas.getCanvasElement().getContext2d().setFillStyle(CssColor.make("#A9A9A9"));
+		canvas.getCanvasElement().getContext2d().setLineWidth(2);
+		canvas.getCanvasElement().getContext2d().fillRect(-(PIEZE_MAIN_SIDE / 2), -(PIEZE_MAIN_SIDE / 2), PIEZE_MAIN_SIDE, PIEZE_MAIN_SIDE);
+		canvas.getCanvasElement().getContext2d().strokeRect(-(PIEZE_MAIN_SIDE / 2), -(PIEZE_MAIN_SIDE / 2), PIEZE_MAIN_SIDE, PIEZE_MAIN_SIDE);
 		
 		// Restauramos el contexto de dibujo
-		canvas.getCanvas().getCanvasElement().getContext2d().restore();
+		canvas.getCanvasElement().getContext2d().restore();
 	}
 	
 	@Override

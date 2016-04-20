@@ -1,5 +1,6 @@
 package santjoans.client.piezes.navigator.preview;
 
+import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.CssColor;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.ImageElement;
@@ -13,7 +14,6 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.widgetideas.graphics.client.ImageLoader;
 
-import santjoans.client.canvas.GWTCanvasEventEnabled;
 import santjoans.client.piezes.navigator.viewer.IControllerViewerContext;
 import santjoans.client.piezes.navigator.viewer.IControllerViewerListener;
 import santjoans.client.util.IConfiguration;
@@ -26,7 +26,7 @@ abstract public class PreviewWidget extends Composite implements IConfiguration,
 	}
 
 	@UiField
-	protected GWTCanvasEventEnabled gwtCanvas;
+	protected Canvas gwtCanvas;
 	
 	@UiField
 	protected CheckBox checkBox;
@@ -42,16 +42,17 @@ abstract public class PreviewWidget extends Composite implements IConfiguration,
 		
 		// Se construye el Widget
 		initWidget(uiBinder.createAndBindUi(this));
-
-//		// Se le asigna un color de background
-//		gwtCanvas.setBackgroundColor(Color.GREY);
 	
-//		gwtCanvas.getCanvas().setSize(PREVIEW_X + "px", PREVIEW_Y + "px");
-		
 	}
 	
-	@UiFactory GWTCanvasEventEnabled instantiateGWTCanvas() {
-		return new GWTCanvasEventEnabled(PREVIEW_X, PREVIEW_Y);
+	@UiFactory 
+	public Canvas instantiateGWTCanvas() {
+		gwtCanvas = Canvas.createIfSupported();
+		gwtCanvas.setHeight(PREVIEW_Y + "px");
+		gwtCanvas.setWidth(PREVIEW_X + "px");
+		gwtCanvas.setCoordinateSpaceHeight(PREVIEW_Y);
+		gwtCanvas.setCoordinateSpaceWidth(PREVIEW_X);
+		return gwtCanvas;
 	}
 	
 	private void loadPreviewBackground() {
@@ -70,7 +71,7 @@ abstract public class PreviewWidget extends Composite implements IConfiguration,
 	protected void updateBackground() {
 		// Si la miniatura esta disponible (si ya se ha cargado) se pinta.
 		if (miniatura != null) {
-			gwtCanvas.getCanvas().getContext2d().drawImage(miniatura, 0, 0);
+			gwtCanvas.getContext2d().drawImage(miniatura, 0, 0);
 		}
 	}
 	
@@ -82,11 +83,11 @@ abstract public class PreviewWidget extends Composite implements IConfiguration,
 		updateBackground();
 
 		// El cuadro rojo
-		gwtCanvas.getCanvas().getContext2d().save();
-		gwtCanvas.getCanvas().getContext2d().setStrokeStyle(CssColor.make("#DC143C"));
-		gwtCanvas.getCanvas().getContext2d().setLineWidth(1);
-		gwtCanvas.getCanvas().getContext2d().strokeRect(context.getRectX(), context.getRectY(), context.getRectWidth(), context.getRectHeight());
-		gwtCanvas.getCanvas().getContext2d().restore();
+		gwtCanvas.getContext2d().save();
+		gwtCanvas.getContext2d().setStrokeStyle(CssColor.make("#DC143C"));
+		gwtCanvas.getContext2d().setLineWidth(1);
+		gwtCanvas.getContext2d().strokeRect(context.getRectX(), context.getRectY(), context.getRectWidth(), context.getRectHeight());
+		gwtCanvas.getContext2d().restore();
 	}
 	
 	@Override

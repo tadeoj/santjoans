@@ -1,10 +1,10 @@
 package santjoans.client.piezes.view;
 
+import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.CssColor;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.ImageElement;
 
-import santjoans.client.canvas.GWTCanvasEventEnabled;
 import santjoans.client.model.IPieze;
 import santjoans.client.model.Model;
 import santjoans.client.model.ModelDirectory;
@@ -17,10 +17,10 @@ public class CenterView implements IConfiguration, IView {
 	
 	private Boolean LOG_ENABLED = false;
 	
-	private GWTCanvasEventEnabled canvas;
+	private Canvas canvas;
 	private Model model;
 	
-	public CenterView(GWTCanvasEventEnabled canvas) {
+	public CenterView(Canvas canvas) {
 		this.canvas = canvas;
 		this.model = ModelDirectory.getCenterModel();
 	}
@@ -84,13 +84,13 @@ public class CenterView implements IConfiguration, IView {
 		// Obtenemos la imagen
 		ImageElement imageElement = pieze.getImageElement(piezePixelsEnum);
 		// Se almazena el contexto grafico.
-		canvas.getCanvas().getCanvasElement().getContext2d().save();
+		canvas.getCanvasElement().getContext2d().save();
 		// Trasladamos el origen
-		canvas.getCanvas().getCanvasElement().getContext2d().translate(xOffsite, yOffsite);
+		canvas.getCanvasElement().getContext2d().translate(xOffsite, yOffsite);
 		// Dibujamos la pieza
-		canvas.getCanvas().getCanvasElement().getContext2d().drawImage( imageElement, 0, 0, PIEZE_CENTER_X_SIDE, PIEZE_CENTER_Y_SIDE);
+		canvas.getCanvasElement().getContext2d().drawImage( imageElement, 0, 0, PIEZE_CENTER_X_SIDE, PIEZE_CENTER_Y_SIDE);
 		// Se recupera el contexto grafico.
-		canvas.getCanvas().getCanvasElement().getContext2d().restore();
+		canvas.getCanvasElement().getContext2d().restore();
 	}
 	
 	protected void drawEmptyPieze(int startX, int startY, int x, int y) {
@@ -102,17 +102,17 @@ public class CenterView implements IConfiguration, IView {
 		double yOffsite = (y * PIEZE_CENTER_Y_SIDE) + (MODEL_CENTER_START_Y - startY) * PIEZE_MAIN_HALF_DIAGONAL;
 		
 		// Se almazena el contexto grafico.
-		canvas.getCanvas().getCanvasElement().getContext2d().save();
+		canvas.getCanvasElement().getContext2d().save();
 		// Trasladamos el origen
-		canvas.getCanvas().getCanvasElement().getContext2d().translate(xOffsite, yOffsite);
+		canvas.getCanvasElement().getContext2d().translate(xOffsite, yOffsite);
 		// Dibujamos la pieza
-		canvas.getCanvas().getCanvasElement().getContext2d().setStrokeStyle(CssColor.make("#A29481"));
-		canvas.getCanvas().getCanvasElement().getContext2d().setFillStyle(CssColor.make("#A9A9A9"));
-		canvas.getCanvas().getCanvasElement().getContext2d().setLineWidth(2);
-		canvas.getCanvas().getCanvasElement().getContext2d().fillRect(0, 0, PIEZE_CENTER_X_SIDE, PIEZE_CENTER_Y_SIDE);
-		canvas.getCanvas().getCanvasElement().getContext2d().strokeRect(0, 0, PIEZE_CENTER_X_SIDE, PIEZE_CENTER_Y_SIDE);
+		canvas.getCanvasElement().getContext2d().setStrokeStyle(CssColor.make("#A29481"));
+		canvas.getCanvasElement().getContext2d().setFillStyle(CssColor.make("#A9A9A9"));
+		canvas.getCanvasElement().getContext2d().setLineWidth(2);
+		canvas.getCanvasElement().getContext2d().fillRect(0, 0, PIEZE_CENTER_X_SIDE, PIEZE_CENTER_Y_SIDE);
+		canvas.getCanvasElement().getContext2d().strokeRect(0, 0, PIEZE_CENTER_X_SIDE, PIEZE_CENTER_Y_SIDE);
 		// Se recupera el contexto grafico.
-		canvas.getCanvas().getCanvasElement().getContext2d().restore();
+		canvas.getCanvasElement().getContext2d().restore();
 	}
 	
 	@Override
