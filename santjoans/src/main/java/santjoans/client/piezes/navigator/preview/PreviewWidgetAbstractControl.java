@@ -73,24 +73,27 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget {
 			int x = nativeEvent.getClientX() - getAbsoluteLeft() - 1;
 			int y = nativeEvent.getClientY() - getAbsoluteTop() - 1;
 			if (x < coordX && y < coordY) {
-				if (status == Status.OFF) {
+				switch (status) {
+				case OFF:
 					// Mientras no engancha la vista el movimiento el contexto
 					// de referencia es el del preview
 					if (isInViewWindow(previewWidgetContext, x, y)) {
 						// El cursor ha entrado en la zona de vision
-						cursor = gwtCanvas.getElement().getStyle().getCursor();
-						gwtCanvas.getElement().getStyle().setCursor(Cursor.POINTER);
+						cursor = gwtCanvas.getCanvasElement().getStyle().getCursor();
+						gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.POINTER);
 						status = Status.PREPARED;
 					}
-				} else if (status == Status.PREPARED) {
+					break;
+				case PREPARED:
 					// Mientras no engancha la vista el movimiento el contexto
 					// de referencia es el del preview
 					if (!isInViewWindow(previewWidgetContext, x, y)) {
 						// El cursor ha salida de la zona de vision
-						gwtCanvas.getElement().getStyle().setCursor(Cursor.valueOf(cursor));
+						gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.valueOf(cursor));
 						status = Status.OFF;
 					}
-				} else {
+					break;
+				case ON:
 					// Esta moviendose con la visa enganchada hay que utilizarel
 					// contexto dinamico).
 					if (isInViewWindow(currentContext, x, y)) {
@@ -99,6 +102,7 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget {
 						if (updateCurrentContext(x, y, false)) {
 							moveStep(currentContext);
 						}
+						break;
 					} else {
 						// Mientras estaba en la zona de vision y mantenia
 						// pulsado el raton, se ha salida de la
@@ -108,6 +112,7 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget {
 						if (updateCurrentContext(x, y, false)) {
 							moveStep(currentContext);
 						}
+						break;
 					}
 				}
 			}
@@ -128,16 +133,23 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget {
 			int x = nativeEvent.getClientX() - getAbsoluteLeft() - 1;
 			int y = nativeEvent.getClientY() - getAbsoluteTop() - 1;
 			if (x < coordX && y < coordY) {
-				if (status == Status.PREPARED) {
+				switch (status) {
+				case PREPARED:
 					// El cursor ha salida de la zona de vision
-					gwtCanvas.getElement().getStyle().setCursor(Cursor.valueOf(cursor));
+					gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.valueOf(cursor));
 					status = Status.OFF;
-				} else if (status == Status.ON) {
+					break;
+				case ON:
 					// Se ha salido del control.
-					gwtCanvas.getElement().getStyle().setCursor(Cursor.valueOf(cursor));
+					gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.valueOf(cursor));
 					status = Status.OFF;
 					// updateCurrentContext(x, y, true);
 					moveFinish(currentContext);
+					break;
+				case OFF:
+					break;
+				default:
+					break;
 				}
 			}
 		}
@@ -157,11 +169,11 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget {
 			int x = nativeEvent.getClientX() - getAbsoluteLeft() - 1;
 			int y = nativeEvent.getClientY() - getAbsoluteTop() - 1;
 			if (x < coordX && y < coordY) {
-				if (status == Status.PREPARED) {
+				if (status.equals(Status.PREPARED)) {
 					if (isInViewWindow(previewWidgetContext, x, y)) {
 						// Mientras el cursor estaba en la zona de vision ha
 						// pulsado el raton (ha enganchado a visa)
-						gwtCanvas.getElement().getStyle().setCursor(Cursor.MOVE);
+						gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.MOVE);
 						status = Status.ON;
 						currentContext = initialContext = new PreviewWidgetContext(previewWidgetContext.getZoomMode(),
 								previewWidgetContext.getStartX(), previewWidgetContext.getStartY());
@@ -187,10 +199,10 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget {
 			int x = nativeEvent.getClientX() - getAbsoluteLeft() - 1;
 			int y = nativeEvent.getClientY() - getAbsoluteTop() - 1;
 			if (x < coordX && y < coordY) {
-				if (status == Status.ON) {
+				if (status.equals(Status.ON)) {
 					// Esta moviendose con la vista enganchada (hay que utilizar
 					// el contexto dinamico).
-					gwtCanvas.getElement().getStyle().setCursor(Cursor.POINTER);
+					gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.POINTER);
 					status = Status.PREPARED;
 					updateCurrentContext(x, y, true);
 					moveFinish(currentContext);

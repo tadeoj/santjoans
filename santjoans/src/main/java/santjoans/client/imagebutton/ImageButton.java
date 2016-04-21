@@ -1,5 +1,6 @@
 package santjoans.client.imagebutton;
 
+import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -64,14 +65,14 @@ public class ImageButton extends Image {
 		addMouseOverHandler(new MouseOverHandler() {
 			@Override
 			public void onMouseOver(MouseOverEvent event) {
-				cursor = getElement().getStyle().getProperty("cursor");
-				getElement().getStyle().setProperty("cursor", "wait");
+				cursor = getElement().getStyle().getCursor();
+				getElement().getStyle().setCursor(Cursor.POINTER);
 			}
 		});
 		addMouseOutHandler(new MouseOutHandler() {
 			@Override
 			public void onMouseOut(MouseOutEvent event) {
-				getElement().getStyle().setProperty("cursor", cursor);
+				getElement().getStyle().setCursor(Cursor.valueOf(cursor));
 				if (state == State.PRESSED)
 					state = State.UNPRESSED;
 			}
@@ -79,9 +80,6 @@ public class ImageButton extends Image {
 	}
 
 	public void updateState() {
-//		getElement().setAttribute("margin", state == State.PRESSED ? PRESSED_MARGIN : UNPRESSED_MARGIN);
-//		getElement().setAttribute("opacity", state == State.DISABLED ? DISABLED_OPACITY : ENABLED_OPACITY);
-//		getElement().setAttribute("filter", state == State.DISABLED ? DISABLED_FILTER : ENABLED_FILTER);
 		getElement().getStyle().setProperty("margin", state == State.PRESSED ? PRESSED_MARGIN : UNPRESSED_MARGIN);
 		getElement().getStyle().setProperty("opacity", state == State.DISABLED ? DISABLED_OPACITY : ENABLED_OPACITY);
 		getElement().getStyle().setProperty("filter", state == State.DISABLED ? DISABLED_FILTER : ENABLED_FILTER);

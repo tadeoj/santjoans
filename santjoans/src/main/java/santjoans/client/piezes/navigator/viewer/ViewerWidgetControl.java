@@ -45,6 +45,7 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration 
 		// Se añaden los listeners para los eventos especificos dentro del
 		// canvas.
 		gwtCanvas.addDoubleClickHandler(new ViewerWidgetDblClickHandler());
+//		gwtCanvas.addTouchStartHandler(new ViewerWidgetTouchStartHandler());
 		gwtCanvas.addMouseOutHandler(new ViewerWidgetMouseOutHandler());
 		gwtCanvas.addMouseMoveHandler(new ViewerWidgetMouseMoveHandler());
 		gwtCanvas.addMouseDownHandler(new ViewerWidgetMouseDownHandler());
@@ -64,6 +65,21 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration 
 		}
 
 	}
+	
+//	class ViewerWidgetTouchStartHandler implements TouchStartHandler {
+//
+//		@Override
+//		public void onTouchStart(TouchStartEvent event) {
+//		
+//			NativeEvent nativeEvent = event.getNativeEvent();
+//			int x = nativeEvent.getClientX() - getAbsoluteLeft() - 1;
+//			int y = nativeEvent.getClientY() - getAbsoluteTop() - 1;
+//			if (x < coordX && y < coordY) {
+//				doubleClick(x, y);
+//			}
+//		}
+//		
+//	}
 
 	class ViewerWidgetMouseOutHandler implements MouseOutHandler {
 
@@ -73,18 +89,21 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration 
 			int x = nativeEvent.getClientX() - getAbsoluteLeft() - 1;
 			int y = nativeEvent.getClientY() - getAbsoluteTop() - 1;
 			if (x < coordX && y < coordY) {
-				if (status == Status.OFF) {
+				switch (status) {
+				case OFF:
 					if (cursor != null) {
-						gwtCanvas.getElement().getStyle().setCursor(Cursor.valueOf(cursor));
+						gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.valueOf(cursor));
 						cursor = null;
 					}
 					status = Status.OFF;
-				} else {
+					break;
+				case ON:
 					if (cursor != null) {
-						gwtCanvas.getElement().getStyle().setCursor(Cursor.valueOf(cursor));
+						gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.valueOf(cursor));
 						cursor = null;
 					}
 					status = Status.OFF;
+					break;
 				}
 			}
 		}
@@ -99,15 +118,18 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration 
 			int x = nativeEvent.getClientX() - getAbsoluteLeft() - 1;
 			int y = nativeEvent.getClientY() - getAbsoluteTop() - 1;
 			if (x < coordX && y < coordY) {
-				if (status == Status.OFF) {
+				switch (status) {
+				case OFF:
 					if (cursor == null) {
-						cursor = gwtCanvas.getElement().getStyle().getCursor();
-						gwtCanvas.getElement().getStyle().setCursor(Cursor.POINTER);
+						cursor = gwtCanvas.getCanvasElement().getStyle().getCursor();
+						gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.POINTER);
 					}
-				} else {
+					break;
+				case ON:
 					if (updateCurrentContext(x, y, false)) {
 						moveStep(currentContext);
 					}
+					break;
 				}
 			}
 		}
@@ -122,9 +144,9 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration 
 			int x = nativeEvent.getClientX() - getAbsoluteLeft() - 1;
 			int y = nativeEvent.getClientY() - getAbsoluteTop() - 1;
 			if (x < coordX && y < coordY) {
-				if (status == Status.OFF) {
+				if (status.equals(Status.OFF)) {
 					status = Status.ON;
-					gwtCanvas.getElement().getStyle().setCursor(Cursor.MOVE);
+					gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.MOVE);
 					currentContext = initialContext = new MovePiezeContext(controllerViewer.getContext().getZoomMode(),
 							controllerViewer.getContext().getStartX(), controllerViewer.getContext().getStartY());
 					initialPixelX = x;
@@ -143,8 +165,8 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration 
 			int x = nativeEvent.getClientX() - getAbsoluteLeft() - 1;
 			int y = nativeEvent.getClientY() - getAbsoluteTop() - 1;
 			if (x < coordX && y < coordY) {
-				if (status == Status.ON) {
-					gwtCanvas.getElement().getStyle().setCursor(Cursor.POINTER);
+				if (status.equals(Status.ON)) {
+					gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.POINTER);
 					status = Status.OFF;
 				}
 			}
