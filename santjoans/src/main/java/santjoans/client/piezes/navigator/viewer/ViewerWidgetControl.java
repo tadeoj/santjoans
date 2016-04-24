@@ -1,6 +1,5 @@
 package santjoans.client.piezes.navigator.viewer;
 
-import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.event.dom.client.DoubleClickEvent;
 import com.google.gwt.event.dom.client.DoubleClickHandler;
@@ -12,6 +11,8 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
+import com.google.gwt.event.dom.client.TouchStartEvent;
+import com.google.gwt.event.dom.client.TouchStartHandler;
 
 import santjoans.client.model.IPieze;
 import santjoans.client.piezes.navigator.viewer.piezepopup.PiezePopup;
@@ -45,7 +46,7 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration 
 		// Se añaden los listeners para los eventos especificos dentro del
 		// canvas.
 		gwtCanvas.addDoubleClickHandler(new ViewerWidgetDblClickHandler());
-//		gwtCanvas.addTouchStartHandler(new ViewerWidgetTouchStartHandler());
+		gwtCanvas.addTouchStartHandler(new ViewerWidgetTouchStartHandler());
 		gwtCanvas.addMouseOutHandler(new ViewerWidgetMouseOutHandler());
 		gwtCanvas.addMouseMoveHandler(new ViewerWidgetMouseMoveHandler());
 		gwtCanvas.addMouseDownHandler(new ViewerWidgetMouseDownHandler());
@@ -56,9 +57,8 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration 
 
 		@Override
 		public void onDoubleClick(DoubleClickEvent event) {
-			NativeEvent nativeEvent = event.getNativeEvent();
-			int x = nativeEvent.getClientX() - getAbsoluteLeft() - 1;
-			int y = nativeEvent.getClientY() - getAbsoluteTop() - 1;
+			int x = event.getClientX() - getAbsoluteLeft() - 1;
+			int y = event.getClientY() - getAbsoluteTop() - 1;
 			if (x < coordX && y < coordY) {
 				doubleClick(x, y);
 			}
@@ -66,28 +66,26 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration 
 
 	}
 	
-//	class ViewerWidgetTouchStartHandler implements TouchStartHandler {
-//
-//		@Override
-//		public void onTouchStart(TouchStartEvent event) {
-//		
-//			NativeEvent nativeEvent = event.getNativeEvent();
-//			int x = nativeEvent.getClientX() - getAbsoluteLeft() - 1;
-//			int y = nativeEvent.getClientY() - getAbsoluteTop() - 1;
-//			if (x < coordX && y < coordY) {
-//				doubleClick(x, y);
-//			}
-//		}
-//		
-//	}
+	class ViewerWidgetTouchStartHandler implements TouchStartHandler {
+
+		@Override
+		public void onTouchStart(TouchStartEvent event) {
+		
+			int x = event.getTouches().get(0).getRelativeX(gwtCanvas.getCanvasElement()) - getAbsoluteLeft() - 1;
+			int y = event.getTouches().get(0).getRelativeY(gwtCanvas.getCanvasElement()) - getAbsoluteTop() - 1;
+			if (x < coordX && y < coordY) {
+				doubleClick(x, y);
+			}
+		}
+		
+	}
 
 	class ViewerWidgetMouseOutHandler implements MouseOutHandler {
 
 		@Override
 		public void onMouseOut(MouseOutEvent event) {
-			NativeEvent nativeEvent = event.getNativeEvent();
-			int x = nativeEvent.getClientX() - getAbsoluteLeft() - 1;
-			int y = nativeEvent.getClientY() - getAbsoluteTop() - 1;
+			int x = event.getClientX() - getAbsoluteLeft() - 1;
+			int y = event.getClientY() - getAbsoluteTop() - 1;
 			if (x < coordX && y < coordY) {
 				switch (status) {
 				case OFF:
@@ -114,9 +112,8 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration 
 
 		@Override
 		public void onMouseMove(MouseMoveEvent event) {
-			NativeEvent nativeEvent = event.getNativeEvent();
-			int x = nativeEvent.getClientX() - getAbsoluteLeft() - 1;
-			int y = nativeEvent.getClientY() - getAbsoluteTop() - 1;
+			int x = event.getClientX() - getAbsoluteLeft() - 1;
+			int y = event.getClientY() - getAbsoluteTop() - 1;
 			if (x < coordX && y < coordY) {
 				switch (status) {
 				case OFF:
@@ -140,9 +137,8 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration 
 
 		@Override
 		public void onMouseDown(MouseDownEvent event) {
-			NativeEvent nativeEvent = event.getNativeEvent();
-			int x = nativeEvent.getClientX() - getAbsoluteLeft() - 1;
-			int y = nativeEvent.getClientY() - getAbsoluteTop() - 1;
+			int x = event.getClientX() - getAbsoluteLeft() - 1;
+			int y = event.getClientY() - getAbsoluteTop() - 1;
 			if (x < coordX && y < coordY) {
 				if (status.equals(Status.OFF)) {
 					status = Status.ON;
@@ -161,9 +157,8 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration 
 
 		@Override
 		public void onMouseUp(MouseUpEvent event) {
-			NativeEvent nativeEvent = event.getNativeEvent();
-			int x = nativeEvent.getClientX() - getAbsoluteLeft() - 1;
-			int y = nativeEvent.getClientY() - getAbsoluteTop() - 1;
+			int x = event.getClientX() - getAbsoluteLeft() - 1;
+			int y = event.getClientY() - getAbsoluteTop() - 1;
 			if (x < coordX && y < coordY) {
 				if (status.equals(Status.ON)) {
 					gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.POINTER);

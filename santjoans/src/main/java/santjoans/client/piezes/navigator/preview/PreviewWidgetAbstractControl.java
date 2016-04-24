@@ -1,6 +1,5 @@
 package santjoans.client.piezes.navigator.preview;
 
-import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
@@ -69,9 +68,8 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget {
 				return;
 			}
 
-			NativeEvent nativeEvent = event.getNativeEvent();
-			int x = nativeEvent.getClientX() - getAbsoluteLeft() - 1;
-			int y = nativeEvent.getClientY() - getAbsoluteTop() - 1;
+			int x = event.getClientX() - getAbsoluteLeft() - 1;
+			int y = event.getClientY() - getAbsoluteTop() - 1;
 			if (x < coordX && y < coordY) {
 				switch (status) {
 				case OFF:
@@ -129,9 +127,8 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget {
 				return;
 			}
 
-			NativeEvent nativeEvent = event.getNativeEvent();
-			int x = nativeEvent.getClientX() - getAbsoluteLeft() - 1;
-			int y = nativeEvent.getClientY() - getAbsoluteTop() - 1;
+			int x = event.getClientX() - getAbsoluteLeft() - 1;
+			int y = event.getClientY() - getAbsoluteTop() - 1;
 			if (x < coordX && y < coordY) {
 				switch (status) {
 				case PREPARED:
@@ -143,7 +140,7 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget {
 					// Se ha salido del control.
 					gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.valueOf(cursor));
 					status = Status.OFF;
-					// updateCurrentContext(x, y, true);
+					updateCurrentContext(x, y, true);
 					moveFinish(currentContext);
 					break;
 				case OFF:
@@ -165,9 +162,8 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget {
 				return;
 			}
 
-			NativeEvent nativeEvent = event.getNativeEvent();
-			int x = nativeEvent.getClientX() - getAbsoluteLeft() - 1;
-			int y = nativeEvent.getClientY() - getAbsoluteTop() - 1;
+			int x = event.getClientX() - getAbsoluteLeft() - 1;
+			int y = event.getClientY() - getAbsoluteTop() - 1;
 			if (x < coordX && y < coordY) {
 				if (status.equals(Status.PREPARED)) {
 					if (isInViewWindow(previewWidgetContext, x, y)) {
@@ -195,9 +191,8 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget {
 				return;
 			}
 
-			NativeEvent nativeEvent = event.getNativeEvent();
-			int x = nativeEvent.getClientX() - getAbsoluteLeft() - 1;
-			int y = nativeEvent.getClientY() - getAbsoluteTop() - 1;
+			int x = event.getClientX() - getAbsoluteLeft() - 1;
+			int y = event.getClientY() - getAbsoluteTop() - 1;
 			if (x < coordX && y < coordY) {
 				if (status.equals(Status.ON)) {
 					// Esta moviendose con la vista enganchada (hay que utilizar
