@@ -1,19 +1,14 @@
 package santjoans.client.piezes.navigator.preview;
 
-import com.google.gwt.dom.client.Style.Cursor;
-import com.google.gwt.event.dom.client.MouseDownEvent;
-import com.google.gwt.event.dom.client.MouseDownHandler;
-import com.google.gwt.event.dom.client.MouseMoveEvent;
-import com.google.gwt.event.dom.client.MouseMoveHandler;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.MouseUpEvent;
-import com.google.gwt.event.dom.client.MouseUpHandler;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Event;
 
+import santjoans.client.canvas.ICanvasEventEnabledListener;
+import santjoans.client.canvas.NativeEventsHandler;
 import santjoans.client.piezes.navigator.viewer.IControllerViewerCommands;
 import santjoans.client.util.ZoomModeEnum;
 
-abstract public class PreviewWidgetAbstractControl extends PreviewWidget {
+abstract public class PreviewWidgetAbstractControl extends PreviewWidget implements ICanvasEventEnabledListener {
 
 	protected Boolean LOG_ENABLED = true;
 
@@ -22,9 +17,6 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget {
 	};
 
 	protected IControllerViewerCommands piezeViewerCommands;
-
-	private int coordX;
-	private int coordY;
 
 	private String cursor = null;
 	private Status status = Status.OFF;
@@ -42,13 +34,12 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget {
 		this.piezeViewerCommands = piezeViewerCommands;
 		this.syncViewer = syncViewer;
 
-		coordX = gwtCanvas.getCoordinateSpaceWidth();
-		coordY = gwtCanvas.getCoordinateSpaceHeight();
-
-		gwtCanvas.addMouseMoveHandler(new ViewerWidgetMouseMoveHandler());
-		gwtCanvas.addMouseOutHandler(new ViewerWidgetMouseOutHandler());
-		gwtCanvas.addMouseDownHandler(new ViewerWidgetMouseDownHandler());
-		gwtCanvas.addMouseUpHandler(new ViewerWidgetMouseUpHandler());
+		Event.addNativePreviewHandler(new NativeEventsHandler(gwtCanvas, this));
+		
+//		gwtCanvas.addMouseMoveHandler(new ViewerWidgetMouseMoveHandler());
+//		gwtCanvas.addMouseOutHandler(new ViewerWidgetMouseOutHandler());
+//		gwtCanvas.addMouseDownHandler(new ViewerWidgetMouseDownHandler());
+//		gwtCanvas.addMouseUpHandler(new ViewerWidgetMouseUpHandler());
 	}
 
 	public boolean isSyncViewer() {
@@ -59,152 +50,239 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget {
 		this.syncViewer = syncViewer;
 	}
 
-	class ViewerWidgetMouseMoveHandler implements MouseMoveHandler {
-
-		@Override
-		public void onMouseMove(MouseMoveEvent event) {
-			if (previewWidgetContext == null) {
-				// Todavia no esta preparado el viewer
-				return;
-			}
-
-			int x = event.getClientX() - getAbsoluteLeft() - 1;
-			int y = event.getClientY() - getAbsoluteTop() - 1;
-			if (x < coordX && y < coordY) {
-				switch (status) {
-				case OFF:
-					// Mientras no engancha la vista el movimiento el contexto
-					// de referencia es el del preview
-					if (isInViewWindow(previewWidgetContext, x, y)) {
-						// El cursor ha entrado en la zona de vision
-						cursor = gwtCanvas.getCanvasElement().getStyle().getCursor();
-						gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.POINTER);
-						status = Status.PREPARED;
-					}
-					break;
-				case PREPARED:
-					// Mientras no engancha la vista el movimiento el contexto
-					// de referencia es el del preview
-					if (!isInViewWindow(previewWidgetContext, x, y)) {
-						// El cursor ha salida de la zona de vision
-						gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.valueOf(cursor));
-						status = Status.OFF;
-					}
-					break;
-				case ON:
-					// Esta moviendose con la visa enganchada hay que utilizarel
-					// contexto dinamico).
-					if (isInViewWindow(currentContext, x, y)) {
-						// Se esta moviendo dentro de la zona de vision con el
-						// raton pulsado.
-						if (updateCurrentContext(x, y, false)) {
-							moveStep(currentContext);
-						}
-						break;
-					} else {
-						// Mientras estaba en la zona de vision y mantenia
-						// pulsado el raton, se ha salida de la
-						// zona de vision lo cual debe ser porque se mueve muy
-						// rapido.
-						// Intentamos anclar el cuadro.
-						if (updateCurrentContext(x, y, false)) {
-							moveStep(currentContext);
-						}
-						break;
-					}
-				}
-			}
+//	class ViewerWidgetMouseMoveHandler implements MouseMoveHandler {
+//
+//		@Override
+//		public void onMouseMove(MouseMoveEvent event) {
+//			if (previewWidgetContext == null) {
+//				// Todavia no esta preparado el viewer
+//				return;
+//			}
+//
+//			int x = event.getClientX() - getAbsoluteLeft() - 1;
+//			int y = event.getClientY() - getAbsoluteTop() - 1;
+//			if (x < coordX && y < coordY) {
+//				switch (status) {
+//				case OFF:
+//					// Mientras no engancha la vista el movimiento el contexto
+//					// de referencia es el del preview
+//					if (isInViewWindow(previewWidgetContext, x, y)) {
+//						// El cursor ha entrado en la zona de vision
+//						cursor = gwtCanvas.getCanvasElement().getStyle().getCursor();
+//						gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.POINTER);
+//						status = Status.PREPARED;
+//					}
+//					break;
+//				case PREPARED:
+//					// Mientras no engancha la vista el movimiento el contexto
+//					// de referencia es el del preview
+//					if (!isInViewWindow(previewWidgetContext, x, y)) {
+//						// El cursor ha salida de la zona de vision
+//						gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.valueOf(cursor));
+//						status = Status.OFF;
+//					}
+//					break;
+//				case ON:
+//					// Esta moviendose con la visa enganchada hay que utilizarel
+//					// contexto dinamico).
+//					if (isInViewWindow(currentContext, x, y)) {
+//						// Se esta moviendo dentro de la zona de vision con el
+//						// raton pulsado.
+//						if (updateCurrentContext(x, y, false)) {
+//							moveStep(currentContext);
+//						}
+//						break;
+//					} else {
+//						// Mientras estaba en la zona de vision y mantenia
+//						// pulsado el raton, se ha salida de la
+//						// zona de vision lo cual debe ser porque se mueve muy
+//						// rapido.
+//						// Intentamos anclar el cuadro.
+//						if (updateCurrentContext(x, y, false)) {
+//							moveStep(currentContext);
+//						}
+//						break;
+//					}
+//				}
+//			}
+//		}
+//
+//	}
+//
+//	class ViewerWidgetMouseOutHandler implements MouseOutHandler {
+//
+//		@Override
+//		public void onMouseOut(MouseOutEvent event) {
+//			if (previewWidgetContext == null) {
+//				// Todavia no esta preparado el viewer
+//				return;
+//			}
+//
+//			int x = event.getClientX() - getAbsoluteLeft() - 1;
+//			int y = event.getClientY() - getAbsoluteTop() - 1;
+//			if (x < coordX && y < coordY) {
+//				switch (status) {
+//				case PREPARED:
+//					// El cursor ha salida de la zona de vision
+//					gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.valueOf(cursor));
+//					status = Status.OFF;
+//					break;
+//				case ON:
+//					// Se ha salido del control.
+//					gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.valueOf(cursor));
+//					status = Status.OFF;
+//					updateCurrentContext(x, y, true);
+//					moveFinish(currentContext);
+//					break;
+//				case OFF:
+//					break;
+//				default:
+//					break;
+//				}
+//			}
+//		}
+//
+//	}
+//
+//	class ViewerWidgetMouseDownHandler implements MouseDownHandler {
+//
+//		@Override
+//		public void onMouseDown(MouseDownEvent event) {
+//			if (previewWidgetContext == null) {
+//				// Todavia no esta preparado el viewer
+//				return;
+//			}
+//
+//			int x = event.getClientX() - getAbsoluteLeft() - 1;
+//			int y = event.getClientY() - getAbsoluteTop() - 1;
+//			if (x < coordX && y < coordY) {
+//				if (status.equals(Status.PREPARED)) {
+//					if (isInViewWindow(previewWidgetContext, x, y)) {
+//						// Mientras el cursor estaba en la zona de vision ha
+//						// pulsado el raton (ha enganchado a visa)
+//						gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.MOVE);
+//						status = Status.ON;
+//						currentContext = initialContext = new PreviewWidgetContext(previewWidgetContext.getZoomMode(),
+//								previewWidgetContext.getStartX(), previewWidgetContext.getStartY());
+//						initialPixelX = x;
+//						initialPixelY = y;
+//					}
+//				}
+//			}
+//		}
+//
+//	}
+//
+//	class ViewerWidgetMouseUpHandler implements MouseUpHandler {
+//
+//		@Override
+//		public void onMouseUp(MouseUpEvent event) {
+//			if (previewWidgetContext == null) {
+//				// Todavia no esta preparado el viewer
+//				return;
+//			}
+//
+//			int x = event.getClientX() - getAbsoluteLeft() - 1;
+//			int y = event.getClientY() - getAbsoluteTop() - 1;
+//			if (x < coordX && y < coordY) {
+//				if (status.equals(Status.ON)) {
+//					// Esta moviendose con la vista enganchada (hay que utilizar
+//					// el contexto dinamico).
+//					gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.POINTER);
+//					status = Status.PREPARED;
+//					updateCurrentContext(x, y, true);
+//					moveFinish(currentContext);
+//				}
+//			}
+//		}
+//
+//	}
+	
+	@Override
+	public void firedEvent(int x, int y, int eventType) {
+		
+		if (previewWidgetContext == null) {
+			// Todavia no esta preparado el viewer
+			return;
 		}
-
-	}
-
-	class ViewerWidgetMouseOutHandler implements MouseOutHandler {
-
-		@Override
-		public void onMouseOut(MouseOutEvent event) {
-			if (previewWidgetContext == null) {
-				// Todavia no esta preparado el viewer
-				return;
-			}
-
-			int x = event.getClientX() - getAbsoluteLeft() - 1;
-			int y = event.getClientY() - getAbsoluteTop() - 1;
-			if (x < coordX && y < coordY) {
-				switch (status) {
-				case PREPARED:
-					// El cursor ha salida de la zona de vision
-					gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.valueOf(cursor));
-					status = Status.OFF;
-					break;
-				case ON:
-					// Se ha salido del control.
-					gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.valueOf(cursor));
-					status = Status.OFF;
-					updateCurrentContext(x, y, true);
-					moveFinish(currentContext);
-					break;
-				case OFF:
-					break;
-				default:
-					break;
-				}
-			}
-		}
-
-	}
-
-	class ViewerWidgetMouseDownHandler implements MouseDownHandler {
-
-		@Override
-		public void onMouseDown(MouseDownEvent event) {
-			if (previewWidgetContext == null) {
-				// Todavia no esta preparado el viewer
-				return;
-			}
-
-			int x = event.getClientX() - getAbsoluteLeft() - 1;
-			int y = event.getClientY() - getAbsoluteTop() - 1;
-			if (x < coordX && y < coordY) {
-				if (status.equals(Status.PREPARED)) {
-					if (isInViewWindow(previewWidgetContext, x, y)) {
-						// Mientras el cursor estaba en la zona de vision ha
-						// pulsado el raton (ha enganchado a visa)
-						gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.MOVE);
-						status = Status.ON;
-						currentContext = initialContext = new PreviewWidgetContext(previewWidgetContext.getZoomMode(),
-								previewWidgetContext.getStartX(), previewWidgetContext.getStartY());
-						initialPixelX = x;
-						initialPixelY = y;
-					}
-				}
-			}
-		}
-
-	}
-
-	class ViewerWidgetMouseUpHandler implements MouseUpHandler {
-
-		@Override
-		public void onMouseUp(MouseUpEvent event) {
-			if (previewWidgetContext == null) {
-				// Todavia no esta preparado el viewer
-				return;
-			}
-
-			int x = event.getClientX() - getAbsoluteLeft() - 1;
-			int y = event.getClientY() - getAbsoluteTop() - 1;
-			if (x < coordX && y < coordY) {
-				if (status.equals(Status.ON)) {
-					// Esta moviendose con la vista enganchada (hay que utilizar
-					// el contexto dinamico).
-					gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.POINTER);
+		
+		switch (status) {
+		case OFF:
+			switch (eventType) {
+			case Event.ONMOUSEMOVE:
+				// Mientras no engancha la vista el movimiento el contexto de referencia es el del preview
+				if (isInViewWindow(previewWidgetContext, x, y)) {
+					// El cursor ha entrado en la zona de vision
+					cursor = DOM.getStyleAttribute(gwtCanvas.getElement(), "cursor");
+					DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", "pointer");
 					status = Status.PREPARED;
-					updateCurrentContext(x, y, true);
-					moveFinish(currentContext);
+				}
+				break;
+			}
+			break;
+		case PREPARED:
+			switch (eventType) {
+			case Event.ONMOUSEMOVE:
+				// Mientras no engancha la vista el movimiento el contexto de referencia es el del preview
+				if (!isInViewWindow(previewWidgetContext, x, y)) {
+					// El cursor ha salida de la zona de vision
+					DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", cursor);
+					status = Status.OFF;
+				}
+				break;
+			case Event.ONMOUSEOUT:
+				// El cursor ha salida de la zona de vision
+				DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", cursor);
+				status = Status.OFF;
+				break;
+			case Event.ONMOUSEDOWN:
+				// Mientras no engancha la vista el movimiento el contexto de referencia es el del preview
+				if (isInViewWindow(previewWidgetContext, x, y)) {
+					// Mientras el cursor estaba en la zona de vision ha pulsado el raton (ha enganchado a visa)
+					DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", "move");
+					status = Status.ON;
+					currentContext = initialContext = new PreviewWidgetContext(previewWidgetContext.getZoomMode(), previewWidgetContext.getStartX(), previewWidgetContext.getStartY());
+					initialPixelX = x;
+					initialPixelY = y;
 				}
 			}
+			break;
+		case ON:
+			switch (eventType) {
+			case Event.ONMOUSEMOVE:
+				// Esta moviendose con la visa enganchada hay que utilizarel contexto dinamico).
+				if (isInViewWindow(currentContext, x, y)) {
+					// Se esta moviendo dentro de la zona de vision con el raton pulsado.
+					if (updateCurrentContext(x, y, false)) {
+						moveStep(currentContext);
+					}
+				} else {
+					// Mientras estaba en la zona de vision y mantenia pulsado el raton, se ha salida de la
+					// zona de vision lo cual debe ser porque se mueve muy rapido.
+					// Intentamos anclar el cuadro.
+					if (updateCurrentContext(x, y, false)) {
+						moveStep(currentContext);
+					}
+				}
+				break;
+			case Event.ONMOUSEUP:
+				// Esta moviendose con la vista enganchada (hay que utilizar el contexto dinamico).
+				DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", "pointer");
+				status = Status.PREPARED;
+				updateCurrentContext(x, y, true);
+				moveFinish(currentContext);
+				break;
+			case Event.ONMOUSEOUT:
+				// Se ha salido del control.
+				DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", cursor);
+				status = Status.OFF;
+				//updateCurrentContext(x, y, true);
+				moveFinish(currentContext);
+				break;
+			}
+			break;
 		}
-
+		
 	}
 
 	private boolean isInViewWindow(PreviewWidgetContext context, int x, int y) {
