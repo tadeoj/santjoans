@@ -25,7 +25,6 @@ public class NativeEventsHandler implements Event.NativePreviewHandler {
 		if (element == canvas.getCanvasElement()) {
 			switch (previewEvent.getTypeInt()) {
 			case Event.ONDBLCLICK:
-			case Event.ONTOUCHSTART:
 			case Event.ONMOUSEOVER:
 			case Event.ONMOUSEDOWN:
 			case Event.ONMOUSEUP:
@@ -36,6 +35,21 @@ public class NativeEventsHandler implements Event.NativePreviewHandler {
 				int y = nativeEvent.getClientY() - canvas.getAbsoluteTop() - 1;
 				if (x < event.getClientX() && y < event.getClientY()) {
 					canvasEventEnabledListener.firedEvent(x, y, previewEvent.getTypeInt());
+				}
+				break;
+			case Event.ONTOUCHSTART:
+			case Event.ONTOUCHMOVE:
+			case Event.ONTOUCHEND:
+			case Event.ONTOUCHCANCEL:
+				NativeEvent nativeTouchEvent = previewEvent.getNativeEvent();
+				
+				int nativeTouchPos = nativeTouchEvent.getTouches().length()-1;
+				int eventTouchPos = event.getTouches().length()-1;
+				
+				int tx = nativeTouchEvent.getTouches().get(nativeTouchPos).getClientX() - canvas.getAbsoluteLeft() - 1;
+				int ty = nativeTouchEvent.getTouches().get(nativeTouchPos).getClientY() - canvas.getAbsoluteTop() - 1;
+				if (tx < event.getTouches().get(eventTouchPos).getClientX() && ty < event.getTouches().get(eventTouchPos).getClientY()) {
+					canvasEventEnabledListener.firedEvent(tx, ty, previewEvent.getTypeInt());
 				}
 				break;
 			}

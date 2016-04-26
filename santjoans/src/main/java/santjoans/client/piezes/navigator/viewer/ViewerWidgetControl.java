@@ -1,6 +1,6 @@
 package santjoans.client.piezes.navigator.viewer;
 
-import com.google.gwt.user.client.DOM;
+import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.user.client.Event;
 
 import santjoans.client.canvas.ICanvasEventEnabledListener;
@@ -29,127 +29,11 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration,
 		super();
 		Event.addNativePreviewHandler(new NativeEventsHandler(gwtCanvas, this));
 	}
-//
-//	class ViewerWidgetDblClickHandler implements DoubleClickHandler {
-//
-//		@Override
-//		public void onDoubleClick(DoubleClickEvent event) {
-//			int x = event.getClientX() - getAbsoluteLeft() - 1;
-//			int y = event.getClientY() - getAbsoluteTop() - 1;
-//			if (x < coordX && y < coordY) {
-//				doubleClick(x, y);
-//			}
-//		}
-//
-//	}
-//	
-//	class ViewerWidgetTouchStartHandler implements TouchStartHandler {
-//
-//		@Override
-//		public void onTouchStart(TouchStartEvent event) {
-//		
-//			int x = event.getTouches().get(0).getRelativeX(gwtCanvas.getCanvasElement()) - getAbsoluteLeft() - 1;
-//			int y = event.getTouches().get(0).getRelativeY(gwtCanvas.getCanvasElement()) - getAbsoluteTop() - 1;
-//			if (x < coordX && y < coordY) {
-//				doubleClick(x, y);
-//			}
-//		}
-//		
-//	}
-//
-//	class ViewerWidgetMouseOutHandler implements MouseOutHandler {
-//
-//		@Override
-//		public void onMouseOut(MouseOutEvent event) {
-//			int x = event.getClientX() - getAbsoluteLeft() - 1;
-//			int y = event.getClientY() - getAbsoluteTop() - 1;
-//			if (x < coordX && y < coordY) {
-//				switch (status) {
-//				case OFF:
-//					if (cursor != null) {
-//						gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.valueOf(cursor));
-//						cursor = null;
-//					}
-//					status = Status.OFF;
-//					break;
-//				case ON:
-//					if (cursor != null) {
-//						gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.valueOf(cursor));
-//						cursor = null;
-//					}
-//					status = Status.OFF;
-//					break;
-//				}
-//			}
-//		}
-//
-//	}
-//
-//	class ViewerWidgetMouseMoveHandler implements MouseMoveHandler {
-//
-//		@Override
-//		public void onMouseMove(MouseMoveEvent event) {
-//			int x = event.getClientX() - getAbsoluteLeft() - 1;
-//			int y = event.getClientY() - getAbsoluteTop() - 1;
-//			if (x < coordX && y < coordY) {
-//				switch (status) {
-//				case OFF:
-//					if (cursor == null) {
-//						cursor = gwtCanvas.getCanvasElement().getStyle().getCursor();
-//						gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.POINTER);
-//					}
-//					break;
-//				case ON:
-//					if (updateCurrentContext(x, y, false)) {
-//						moveStep(currentContext);
-//					}
-//					break;
-//				}
-//			}
-//		}
-//
-//	}
-//
-//	class ViewerWidgetMouseDownHandler implements MouseDownHandler {
-//
-//		@Override
-//		public void onMouseDown(MouseDownEvent event) {
-//			int x = event.getClientX() - getAbsoluteLeft() - 1;
-//			int y = event.getClientY() - getAbsoluteTop() - 1;
-//			if (x < coordX && y < coordY) {
-//				if (status.equals(Status.OFF)) {
-//					status = Status.ON;
-//					gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.MOVE);
-//					currentContext = initialContext = new MovePiezeContext(controllerViewer.getContext().getZoomMode(),
-//							controllerViewer.getContext().getStartX(), controllerViewer.getContext().getStartY());
-//					initialPixelX = x;
-//					initialPixelY = y;
-//				}
-//			}
-//		}
-//
-//	}
-//
-//	class ViewerWidgetMouseUpHandler implements MouseUpHandler {
-//
-//		@Override
-//		public void onMouseUp(MouseUpEvent event) {
-//			int x = event.getClientX() - getAbsoluteLeft() - 1;
-//			int y = event.getClientY() - getAbsoluteTop() - 1;
-//			if (x < coordX && y < coordY) {
-//				if (status.equals(Status.ON)) {
-//					gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.POINTER);
-//					status = Status.OFF;
-//				}
-//			}
-//		}
-//
-//	}
 	
 	@Override
 	public void firedEvent(int x, int y, int eventType) {
 		
-		if (eventType == Event.ONDBLCLICK || eventType == Event.ONTOUCHSTART ) {
+		if (eventType == Event.ONDBLCLICK) {
 			doubleClick(x, y);
 		}
 		switch (status) {
@@ -157,43 +41,48 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration,
 			switch (eventType) {
 			case Event.ONMOUSEMOVE:
 				if (cursor == null) {
-					cursor = DOM.getStyleAttribute(gwtCanvas.getElement(), "cursor");
-					DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", "pointer");
+					cursor = gwtCanvas.getCanvasElement().getStyle().getCursor();
+					gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.POINTER);
 				}
 				break;
 			case Event.ONMOUSEOUT:
 				// El cursor ha salida de la zona de vision
 				if (cursor != null) {
-					DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", cursor);
+					gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.valueOf(cursor));
 					cursor = null;
 				}
 				break;
+			case Event.ONTOUCHSTART:
 			case Event.ONMOUSEDOWN:
 				// Mientras el cursor estaba en la zona de vision ha pulsado el raton (ha enganchado a visa)
 				status = Status.ON;
-				DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", "move");
+				gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.MOVE);
 				currentContext = initialContext = new MovePiezeContext(controllerViewer.getContext().getZoomMode(), controllerViewer.getContext().getStartX(), controllerViewer.getContext().getStartY());
 				initialPixelX = x;
 				initialPixelY = y;
+				break;
 			}
 			break;
 		case ON:
 			switch (eventType) {
+			case Event.ONTOUCHMOVE:
 			case Event.ONMOUSEMOVE:
 				// Esta moviendose con la visa enganchada hay que utilizarel contexto dinamico).
 				if (updateCurrentContext(x, y, false)) {
 					moveStep(currentContext);
 				}
 				break;
+			case Event.ONTOUCHEND:
 			case Event.ONMOUSEUP:
 				// Esta moviendose con la vista enganchada (hay que utilizar el contexto dinamico).
-				DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", "pointer");
+				gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.POINTER);
 				status = Status.OFF;
 				break;
+			case Event.ONTOUCHCANCEL:
 			case Event.ONMOUSEOUT:
 				// Se ha salido del control.
 				if (cursor != null) {
-					DOM.setStyleAttribute(gwtCanvas.getElement(), "cursor", cursor);
+					gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.valueOf(cursor));
 					cursor = null;
 				}
 				status = Status.OFF;
