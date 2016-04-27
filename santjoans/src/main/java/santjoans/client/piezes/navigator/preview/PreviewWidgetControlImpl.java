@@ -30,5 +30,4 @@ public class PreviewWidgetControlImpl extends PreviewWidgetAbstractControl {
 	protected void autoSync(boolean sync) {
 		this.sync = sync;
 	}
-	
 }

@@ -3,8 +3,8 @@ package santjoans.client.piezes.navigator.preview;
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.user.client.Event;
 
+import santjoans.client.canvas.CanvasNativeEventsHandler;
 import santjoans.client.canvas.ICanvasEventEnabledListener;
-import santjoans.client.canvas.NativeEventsHandler;
 import santjoans.client.piezes.navigator.viewer.IControllerViewerCommands;
 import santjoans.client.util.ZoomModeEnum;
 
@@ -20,9 +20,13 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 
 	private String cursor = null;
 	private Status status = Status.OFF;
+	private Status touchStatus = Status.OFF;
 
 	protected int initialPixelX;
 	protected int initialPixelY;
+	
+	protected int initialTouchPixelX;
+	protected int initialTouchPixelY;
 
 	protected PreviewWidgetContext initialContext;
 	protected PreviewWidgetContext currentContext;
@@ -34,7 +38,7 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 		this.piezeViewerCommands = piezeViewerCommands;
 		this.syncViewer = syncViewer;
 
-		Event.addNativePreviewHandler(new NativeEventsHandler(gwtCanvas, this));
+		Event.addNativePreviewHandler(new CanvasNativeEventsHandler(gwtCanvas, this));
 	}
 
 	public boolean isSyncViewer() {
@@ -47,7 +51,7 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 
 	
 	@Override
-	public void firedEvent(int x, int y, int eventType) {
+	public void fireEvent(int x, int y, int eventType) {
 		
 		if (previewWidgetContext == null) {
 			// Todavia no esta preparado el viewer
@@ -57,7 +61,6 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 		switch (status) {
 		case OFF:
 			switch (eventType) {
-			case Event.ONTOUCHMOVE:
 			case Event.ONMOUSEMOVE:
 				// Mientras no engancha la vista el movimiento el contexto de referencia es el del preview
 				if (isInViewWindow(previewWidgetContext, x, y)) {
@@ -71,7 +74,6 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 			break;
 		case PREPARED:
 			switch (eventType) {
-			case Event.ONTOUCHMOVE:
 			case Event.ONMOUSEMOVE:
 				// Mientras no engancha la vista el movimiento el contexto de referencia es el del preview
 				if (!isInViewWindow(previewWidgetContext, x, y)) {
@@ -85,7 +87,6 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 				gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.valueOf(cursor));
 				status = Status.OFF;
 				break;
-			case Event.ONTOUCHSTART:
 			case Event.ONMOUSEDOWN:
 				// Mientras no engancha la vista el movimiento el contexto de referencia es el del preview
 				if (isInViewWindow(previewWidgetContext, x, y)) {
@@ -100,7 +101,6 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 			break;
 		case ON:
 			switch (eventType) {
-			case Event.ONTOUCHMOVE:
 			case Event.ONMOUSEMOVE:
 				// Esta moviendose con la visa enganchada hay que utilizarel contexto dinamico).
 				if (isInViewWindow(currentContext, x, y)) {
@@ -117,8 +117,6 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 					}
 				}
 				break;
-			case Event.ONTOUCHCANCEL:
-			case Event.ONTOUCHEND:
 			case Event.ONMOUSEUP:
 				// Esta moviendose con la vista enganchada (hay que utilizar el contexto dinamico).
 				gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.POINTER);
@@ -138,6 +136,62 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 		}
 		
 	}
+	
+	@Override
+	public void fireTouchEvent(int x, int y, int eventType) {
+
+		if (previewWidgetContext == null) {
+			// Todavia no esta preparado el viewer
+			return;
+		}
+		
+		switch (touchStatus) {
+		case OFF:
+			switch (eventType) {
+			case Event.ONTOUCHSTART:
+				// Mientras no engancha la vista el movimiento el contexto de referencia es el del preview
+				if (isInViewWindow(previewWidgetContext, x, y)) {
+					// Mientras el cursor estaba en la zona de vision ha pulsado el raton (ha enganchado a visa)
+					touchStatus = Status.ON;
+					currentContext = initialContext = new PreviewWidgetContext(previewWidgetContext.getZoomMode(), previewWidgetContext.getStartX(), previewWidgetContext.getStartY());
+					initialTouchPixelX = x;
+					initialTouchPixelY = y;
+				}
+			}
+			break;
+		case ON:
+			switch (eventType) {
+			case Event.ONTOUCHMOVE:
+				// Esta moviendose con la visa enganchada hay que utilizarel contexto dinamico).
+				if (isInViewWindow(currentContext, x, y)) {
+					// Se esta moviendo dentro de la zona de vision con el raton pulsado.
+					if (updateTouchCurrentContext(x, y, false)) {
+						moveStep(currentContext);
+					}
+				} else {
+					// Mientras estaba en la zona de vision y mantenia pulsado el raton, se ha salida de la
+					// zona de vision lo cual debe ser porque se mueve muy rapido.
+					// Intentamos anclar el cuadro.
+					if (updateTouchCurrentContext(x, y, false)) {
+						moveStep(currentContext);
+					}
+				}
+				break;
+			case Event.ONTOUCHEND:
+			case Event.ONTOUCHCANCEL:
+				// Se ha salido del control.
+				touchStatus = Status.OFF;
+				moveFinish(currentContext);
+				break;
+			}
+			break;
+		case PREPARED:
+			break;
+		default:
+			break;
+		}
+		
+	}
 
 	private boolean isInViewWindow(PreviewWidgetContext context, int x, int y) {
 		return x >= context.getViewStartX() && x <= context.getViewEndX() && y >= context.getViewStartY()
@@ -149,6 +203,26 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 		// actual y la posicion cuando se pulso el raton.
 		int coordOffsiteX = calcCoordX(x - initialPixelX);
 		int coordOffsiteY = calcCoordY(y - initialPixelY);
+		// Se suma esta diferencia de coordenadas a las corrdenadas que habian
+		// cuando se pulso el raton.
+		int newStartX = adjustX(initialContext.getStartX() + coordOffsiteX);
+		int newStartY = adjustY(initialContext.getStartY() + coordOffsiteY);
+		// Si la posicion de las coordenadas calculadas es diferente a la ultima
+		// que se calculo o si esta la operacion forzada
+		// se retorna un nuevo contexto.
+		if (newStartX != currentContext.getStartX() || newStartY != currentContext.getStartY() || force) {
+			currentContext = new PreviewWidgetContext(previewWidgetContext.getZoomMode(), newStartX, newStartY);
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	protected boolean updateTouchCurrentContext(int x, int y, boolean force) {
+		// Se calcula la diferencia en unidades de coordenada entre la posicion
+		// actual y la posicion cuando se pulso el raton.
+		int coordOffsiteX = calcCoordX(x - initialTouchPixelX);
+		int coordOffsiteY = calcCoordY(y - initialTouchPixelY);
 		// Se suma esta diferencia de coordenadas a las corrdenadas que habian
 		// cuando se pulso el raton.
 		int newStartX = adjustX(initialContext.getStartX() + coordOffsiteX);
