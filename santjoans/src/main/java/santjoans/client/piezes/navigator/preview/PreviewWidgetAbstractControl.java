@@ -80,7 +80,6 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 					status = Status.OFF;
 				}
 				break;
-			case Event.ONTOUCHCANCEL:
 			case Event.ONMOUSEOUT:
 				// El cursor ha salida de la zona de vision
 				gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.valueOf(cursor));
@@ -118,6 +117,7 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 					}
 				}
 				break;
+			case Event.ONTOUCHCANCEL:
 			case Event.ONTOUCHEND:
 			case Event.ONMOUSEUP:
 				// Esta moviendose con la vista enganchada (hay que utilizar el contexto dinamico).
@@ -126,7 +126,6 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 				updateCurrentContext(x, y, true);
 				moveFinish(currentContext);
 				break;
-			case Event.ONTOUCHCANCEL:
 			case Event.ONMOUSEOUT:
 				// Se ha salido del control.
 				gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.valueOf(cursor));

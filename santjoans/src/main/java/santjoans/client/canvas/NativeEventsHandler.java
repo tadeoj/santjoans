@@ -42,13 +42,9 @@ public class NativeEventsHandler implements Event.NativePreviewHandler {
 			case Event.ONTOUCHEND:
 			case Event.ONTOUCHCANCEL:
 				NativeEvent nativeTouchEvent = previewEvent.getNativeEvent();
-				
-				int nativeTouchPos = nativeTouchEvent.getTouches().length()-1;
-				int eventTouchPos = event.getTouches().length()-1;
-				
-				int tx = nativeTouchEvent.getTouches().get(nativeTouchPos).getClientX() - canvas.getAbsoluteLeft() - 1;
-				int ty = nativeTouchEvent.getTouches().get(nativeTouchPos).getClientY() - canvas.getAbsoluteTop() - 1;
-				if (tx < event.getTouches().get(eventTouchPos).getClientX() && ty < event.getTouches().get(eventTouchPos).getClientY()) {
+				int tx = nativeTouchEvent.getTargetTouches().get(0).getClientX() - canvas.getAbsoluteLeft() - 1;
+				int ty = nativeTouchEvent.getTargetTouches().get(0).getClientY() - canvas.getAbsoluteTop() - 1;
+				if (tx < event.getTargetTouches().get(0).getClientX() && ty < event.getTargetTouches().get(0).getClientY()) {
 					canvasEventEnabledListener.firedEvent(tx, ty, previewEvent.getTypeInt());
 				}
 				break;
