@@ -104,12 +104,16 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration,
 		case OFF:
 			switch (eventType) {
 			case Event.ONTOUCHSTART:
-				// Mientras el cursor estaba en la zona de vision ha pulsado el
-				// raton (ha enganchado a visa)
-				touchStatus = Status.ON;
-				currentContext = initialContext = new MovePiezeContext(controllerViewer.getContext().getZoomMode(), controllerViewer.getContext().getStartX(), controllerViewer.getContext().getStartY());
-				initialTouchPixelX = x;
-				initialTouchPixelY = y;
+				if (x == initialTouchPixelX && y == initialTouchPixelY) {
+					doubleClick(x, y);
+				} else {
+					// Mientras el cursor estaba en la zona de vision ha pulsado el
+					// raton (ha enganchado a visa)
+					touchStatus = Status.ON;
+					currentContext = initialContext = new MovePiezeContext(controllerViewer.getContext().getZoomMode(), controllerViewer.getContext().getStartX(), controllerViewer.getContext().getStartY());
+					initialTouchPixelX = x;
+					initialTouchPixelY = y;	
+				}
 			}
 			break;
 		case ON:
