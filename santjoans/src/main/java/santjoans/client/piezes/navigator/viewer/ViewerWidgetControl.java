@@ -15,10 +15,15 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration,
 	enum Status {
 		OFF, ON
 	};
+	
+	enum DBStatus {
+		OFF, ON
+	};
 
 	private String cursor = null;
 	private Status status = Status.OFF;
 	private Status touchStatus = Status.OFF;
+	private DBStatus dbStatus = DBStatus.OFF;
 
 	protected int initialPixelX;
 	protected int initialPixelY;
@@ -104,8 +109,9 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration,
 		case OFF:
 			switch (eventType) {
 			case Event.ONTOUCHSTART:
-				if (x == initialTouchPixelX && y == initialTouchPixelY) {
+				if (dbStatus == DBStatus.ON) {
 					doubleClick(x, y);
+					dbStatus = DBStatus.OFF;
 				} else {
 					// Mientras el cursor estaba en la zona de vision ha pulsado el
 					// raton (ha enganchado a visa)
@@ -113,6 +119,7 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration,
 					currentContext = initialContext = new MovePiezeContext(controllerViewer.getContext().getZoomMode(), controllerViewer.getContext().getStartX(), controllerViewer.getContext().getStartY());
 					initialTouchPixelX = x;
 					initialTouchPixelY = y;	
+					dbStatus = DBStatus.ON;
 				}
 			}
 			break;
@@ -123,6 +130,7 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration,
 				// contexto dinamico).
 				if (updateTouchCurrentContext(x, y, false)) {
 					moveStep(currentContext);
+					dbStatus = DBStatus.OFF;
 				}
 				break;
 			case Event.ONTOUCHEND:
