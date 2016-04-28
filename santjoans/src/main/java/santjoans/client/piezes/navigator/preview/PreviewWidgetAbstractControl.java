@@ -48,7 +48,6 @@ abstract public class PreviewWidgetAbstractControl extends PreviewWidget impleme
 	public void setSyncViewer(boolean syncViewer) {
 		this.syncViewer = syncViewer;
 	}
-
 	
 	@Override
 	public void fireEvent(int x, int y, int eventType) {

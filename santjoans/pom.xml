@@ -121,8 +121,8 @@
 					</execution>
 				</executions>
 				<configuration>
-					<!-- <inplace>true</inplace> -->
-					<!-- <noServer>true</noServer> -->
+<!-- 					<inplace>true</inplace> -->
+<!-- 					<noServer>true</noServer> -->
 
 					<logLevel>INFO</logLevel>
 					<copyWebapp>true</copyWebapp>

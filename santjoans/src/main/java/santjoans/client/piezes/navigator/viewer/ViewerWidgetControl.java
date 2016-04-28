@@ -66,8 +66,7 @@ public class ViewerWidgetControl extends ViewerWidget implements IConfiguration,
 				// raton (ha enganchado a visa)
 				status = Status.ON;
 				gwtCanvas.getCanvasElement().getStyle().setCursor(Cursor.MOVE);
-				currentContext = initialContext = new MovePiezeContext(controllerViewer.getContext().getZoomMode(),
-						controllerViewer.getContext().getStartX(), controllerViewer.getContext().getStartY());
+				currentContext = initialContext = new MovePiezeContext(controllerViewer.getContext().getZoomMode(), controllerViewer.getContext().getStartX(), controllerViewer.getContext().getStartY());
 				initialPixelX = x;
 				initialPixelY = y;
 				break;
